@@ -1,0 +1,17 @@
+# jwt auth: https://auth0.com/docs/quickstart/backend/django/01-authorization
+# https://django-rest-framework-simplejwt.readthedocs.io/_/downloads/en/latest/pdf/
+# https://github.com/SimpleJWT/drf-SimpleJWT-React/tree/master/server
+
+django
+uuid
+djangorestframework
+djangorestframework_simplejwt
+django-cors-headers
+#django-rest-swagger
+drf-yasg
+drf-yasg[validation]
+
+#cryptography~=2.8
+#drf-jwt~=1.13.3
+#pyjwt~=1.7.1
+#requests~=2.22.0
