@@ -10,6 +10,7 @@ django-cors-headers
 #django-rest-swagger
 drf-yasg
 drf-yasg[validation]
+flake8~=3.9.2
 
 #cryptography~=2.8
 #drf-jwt~=1.13.3
