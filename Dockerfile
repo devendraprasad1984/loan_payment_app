@@ -5,6 +5,7 @@
 #docker-compose run app sh -c "django-admin.py startproject app ."
 #docker-compose run app sh -c "django-admin.py startapp app ."
 #docker-compose run app sh -c "python manage.py runserver 0.0.0.0:6203"
+#docker-compose run app sh -c "python manage.py test"
 
 FROM python:3.7-alpine
 MAINTAINER DEVENDRAPRASAD1984@gmail.com
