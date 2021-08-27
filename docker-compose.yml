@@ -3,10 +3,21 @@ services:
   app:
     build:
       context: .
+#    links:
+#      - "database_default"
     ports:
-      - "6203:6203"
+      - "6203:8081"
     volumes:
-      - ./app:/app
-    command: >
-      sh -c "python manage.py runserver 0.0.0.0:6203"
+      - "./app:/app:rw"
+    command: python manage.py runserver 0.0.0.0:8081
+#    env_file: .env-local
 
+#
+#database_default:
+#  image: postgres:9.6
+#  environment:
+#    POSTGRES_DB: "db"
+#    POSTGRES_HOST_AUTH_METHOD: "trust"
+#    SERVICE_MANAGER: "fsm-postgres"
+#  volumes:
+#    - ".:/app:rw"

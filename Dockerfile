@@ -6,8 +6,10 @@
 #docker-compose run app sh -c "django-admin.py startproject app ."
 #docker-compose run app sh -c "django-admin.py startapp core"
 #docker-compose run app sh -c "python manage.py makemigrations"
+#docker-compose run app sh -c "python manage.py makemigrations core"
 #docker-compose run app sh -c "python manage.py migrate"
-#docker-compose run app sh -c "python manage.py runserver 0.0.0.0:6203"
+#docker-compose run app sh -c "python manage.py runserver 0.0.0.0:80"
+#docker-compose run app sh -c "python manage.py test"
 #docker-compose run app sh -c "python manage.py test && flake8"
 
 FROM python:3.7-alpine
