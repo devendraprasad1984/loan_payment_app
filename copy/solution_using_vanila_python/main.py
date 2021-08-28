@@ -210,9 +210,11 @@ def get_command_handler(command):
 
 
 def print_base_objects():
+    print('-' * 80)
     print_log(f'checking BANKS {BANKS}')
     print_log(f'checking CUSTOMERS {CUSTOMERS}')
     print_log(f'checking LOANS {LEDGER}')
+    print('-' * 80)
 
 
 def process_ledger_commands(commands):
