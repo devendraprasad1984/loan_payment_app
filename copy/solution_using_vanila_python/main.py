@@ -113,7 +113,8 @@ def get_loan_detail(customer_name=None, bank_name=None):
     bank_id = bank_object[key_object][key_id]
     loan_id = f'{bank_id}_{customer_id}'
     customer_loan = find_bank_customer_loan_object(LEDGER, loan_id=loan_id)
-    return customer_loan[key_found], customer_loan
+    customer_loan_object = customer_loan[key_object][key_object]
+    return customer_loan[key_found], customer_loan_object
 
 
 def handle_loan(command):
@@ -164,10 +165,9 @@ def handle_balance(command):
     flag, customer_loan = get_loan_detail(customer_name=customer_name, bank_name=bank_name)
     if flag == False: return
 
-    customer_loan_object = customer_loan[key_object][key_object]
-    emi_remaining = int(customer_loan_object[key_emi_months]) - emi_number
-    amount_paid = round(float(customer_loan_object[key_emi_amount]) * emi_number)
-    amount_remaining = round(float(customer_loan_object[key_total_amount_pi]) - amount_paid)
+    emi_remaining = int(customer_loan[key_emi_months]) - emi_number
+    amount_paid = round(float(customer_loan[key_emi_amount]) * emi_number)
+    amount_remaining = round(float(customer_loan[key_total_amount_pi]) - amount_paid)
 
     print_log(f'BALANCE: {customer_name} from {bank_name} amount paid {amount_paid} '
               f'and remaining {amount_remaining}. Total emis paid are {emi_number} and '
@@ -178,16 +178,26 @@ def handle_payment(command):
     if command.__len__() != 5: return
     bank_name = command[1]
     customer_name = command[2]
-    emi_amount = float(command[3])
+    emi_payment = float(command[3])
     emi_number = int(command[4])
 
     flag, customer_loan = get_loan_detail(customer_name=customer_name, bank_name=bank_name)
     if flag == False: return
 
-    customer_loan_object = customer_loan[key_object][key_object]
-    emi_remaining = int(customer_loan_object[key_emi_months]) - emi_number
-    amount_paid = round(float(customer_loan_object[key_emi_amount]) * emi_number)
-    amount_remaining = round(float(customer_loan_object[key_total_amount_pi]) - amount_paid)
+    emi_amount = int(customer_loan[key_emi_amount])
+    if emi_payment < emi_amount:
+        print_log(f'emi payment {emi_payment} must be greater than emi amount {emi_amount}')
+        return
+    emi_months_repaid = int(customer_loan[key_emi_months_repaid]) + emi_number
+    emi_months_remaining = int(customer_loan[key_emi_months]) - emi_months_repaid
+    amount_repaid = float(customer_loan[key_repaid_amount]) + round(float(customer_loan[key_emi_amount]) * emi_number)
+
+    loan_update_object = {
+        key_emi_months: emi_months_remaining,
+        key_emi_months_repaid: emi_months_repaid,
+        key_repaid_amount: amount_repaid,
+    }
+    customer_loan.update(loan_update_object)
     print_log(
         f'PAYEMENT: {customer_name} from {bank_name}, an emi {emi_amount} and its '
     )
