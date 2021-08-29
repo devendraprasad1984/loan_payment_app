@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'loan_manager',
     'bank_manager',
     'customer_manager',
-    'subscribe'
+    'subscribe',
+    'core'
 ]
 
 # SWAGGER_SETTINGS = {
@@ -90,7 +91,7 @@ TEMPLATES = [
 ]
 
 REST_FRAMEWORK = {
-    "DEFAULT_PARSER_CLASSES": ["rest_framework.parsers.JSONParser",],
+    "DEFAULT_PARSER_CLASSES": ["rest_framework.parsers.JSONParser", ],
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # 'rest_framework.authentication.TokenAuthentication',  # <-- Token Authentication
@@ -100,6 +101,7 @@ REST_FRAMEWORK = {
 }
 
 from datetime import timedelta
+
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
@@ -130,7 +132,7 @@ WSGI_APPLICATION = 'loan_payments.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-RUN_ON='heroku'
+RUN_ON = 'heroku'
 
 ENGINE = 'django.db.backends.postgresql'
 DBNAME = 'geek_trust_loans'
@@ -139,7 +141,7 @@ HOST = 'localhost'
 PORT = 5432
 PWD = 'admin'
 
-if RUN_ON=='postgres_local':
+if RUN_ON == 'postgres_local':
     DATABASES = {
         'default': {
             'ENGINE': ENGINE,
@@ -150,14 +152,13 @@ if RUN_ON=='postgres_local':
             'PORT': PORT
         }
     }
-elif RUN_ON=='heroku':
+elif RUN_ON == 'heroku':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -199,6 +200,7 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'core.User'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Activate Django-Heroku.
 django_heroku.settings(locals())
