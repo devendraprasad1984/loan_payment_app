@@ -3,10 +3,10 @@ import json
 from django.shortcuts import HttpResponse as res
 from django.views.decorators.csrf import csrf_exempt
 from drf_yasg.utils import swagger_auto_schema
-from loan_payments import params
-from loan_payments.common import utils, field_names, lookup
 from rest_framework.decorators import api_view
 
+from loan_payments import params
+from loan_payments.common import utils, field_names, lookup
 from . import models
 
 

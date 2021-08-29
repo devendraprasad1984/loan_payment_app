@@ -5,7 +5,6 @@ from bank_manager import models as bank
 from customer_manager import models as customer
 from loan_manager import models as loan_model
 from subscribe import models as subscriber
-
 from . import utils, field_names, queries
 
 

@@ -1,6 +1,7 @@
+from django.db import models
+
 from bank_manager import models as bank
 from customer_manager import models as customer
-from django.db import models
 
 
 class LOANS(models.Model):
