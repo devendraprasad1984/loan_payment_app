@@ -1,14 +1,14 @@
 import json
 
-from bank_manager import models
 from django.http import HttpRequest
 from django.shortcuts import HttpResponse as res
 from django.views.decorators.csrf import csrf_exempt
 from drf_yasg.utils import swagger_auto_schema
-from loan_payments import params
-from loan_payments.common import utils, field_names, lookup
 from rest_framework.decorators import api_view
 
+from bank_manager import models
+from loan_payments import params
+from loan_payments.common import utils, field_names, lookup
 from .validations import validate as bankValidations
 
 
