@@ -9,12 +9,5 @@ djangorestframework_simplejwt
 gunicorn
 django-heroku
 django-cors-headers
-#django-rest-swagger
 drf-yasg
-#drf-yasg[validation]
 flake8
-
-#cryptography~=2.8
-#drf-jwt~=1.13.3
-#pyjwt~=1.7.1
-#requests~=2.22.0

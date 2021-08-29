@@ -43,8 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'core',
+    # 'django.contrib.staticfiles',
+    # 'core',
     "rest_framework",
     "corsheaders",
     "drf_yasg",
@@ -132,6 +132,7 @@ WSGI_APPLICATION = 'loan_payments.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 RUN_ON = 'heroku'
+sqlitedb = 'test.sqlite3'
 
 ENGINE = 'django.db.backends.postgresql'
 DBNAME = 'geek_trust_loans'
@@ -155,7 +156,7 @@ elif RUN_ON == 'heroku':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'NAME': os.path.join(BASE_DIR, sqlitedb),
         }
     }
 
@@ -199,6 +200,6 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = 'core.User'
+# AUTH_USER_MODEL = 'core.User'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 django_heroku.settings(locals())
