@@ -18,6 +18,11 @@ look at demo video for steps here: youtube link: https://youtu.be/6-v_vIxyB4g
 
 
 heroku login
+heroku create
+git remote -v
+heroku git:remote -a test-loan-ledger-dp
+git push heroku main
+renaming: git remote rename heroku heroku-staging
 heroku ps:scale web=1 --app test-loan-ledger-dp
 heroku open --app test-loan-ledger-dp
 

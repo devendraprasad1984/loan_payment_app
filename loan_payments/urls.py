@@ -32,7 +32,7 @@ schema_view = get_schema_view(
     openapi.Info(
         title="Geek Trust Ledger.co API",
         default_version='v1',
-        description="geek trust description",
+        description="geek trust description, see demo first: https://www.youtube.com/watch?v=6-v_vIxyB4g",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="contact@snippets.local"),
         license=openapi.License(name="BSD License"),
