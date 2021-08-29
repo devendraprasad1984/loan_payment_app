@@ -10,4 +10,5 @@ gunicorn
 django-heroku
 django-cors-headers
 drf-yasg
+drf-yasg[validation]
 flake8
