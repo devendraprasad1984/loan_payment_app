@@ -4,7 +4,6 @@ from django.test import TestCase
 
 class ModelTests(TestCase):
 
-
     def test_create_user_with_email_successful(self):
         """test creating new user when email is successful"""
         email = "test@gmail.com"
@@ -15,3 +14,9 @@ class ModelTests(TestCase):
         )
         self.assertEqual(user.email, email)
         self.assertTrue(user.check_password(pwd))
+
+    def test_new_user_email_normalize(self):
+        """test the email for new user"""
+        email = 'devendraprasad1984@gmail.com'
+        user = get_user_model().objects.create_user(email, 'test123')
+        self.assertEqual(user.email, email.lower())
