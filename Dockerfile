@@ -17,7 +17,8 @@
 # docker-compose run app sh -c "python manage.py runserver 0.0.0.0:80"
 # docker-compose run app sh -c "python manage.py test"
 # docker-compose run app sh -c "python manage.py test && flake8"
-# docker-compose up"
+# docker-compose up
+# docker-compose logs
 
 FROM python:3.7-alpine
 MAINTAINER DEVENDRAPRASAD1984@gmail.com
