@@ -43,17 +43,10 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/user', include('user.urls')),
     path('banks/', include("bank_manager.urls")),
     path('customers/', include("customer_manager.urls")),
     path('onboard/', include("subscribe.urls")),
     path('loans/', include("loan_manager.urls")),
-    # path('^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='drf_yasg_swagger'),
-    # path('^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    # url('apis/', schema_view),
-    # url(r'^', schema_view, name="docs"),
-    # url('swagger/', TemplateView.as_view(
-    #     template_name='swagger.html',
-    #     extra_context={'schema_url':'openapi-schema'}
-    # ), name='swagger'),
 ]
