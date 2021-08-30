@@ -3,11 +3,12 @@
 # docker build .
 # docker-compose build
 # docker-compose up -d --no-deps --build <service_name>
-# docker-compose run app sh -c "django-admin.py startproject app ."
-# docker-compose run app sh -c "django-admin.py startapp core"
-# docker-compose run app sh -c "django-admin.py startapp bank_manager"
-# docker-compose run app sh -c "django-admin.py startapp customer_manager"
-# docker-compose run app sh -c "django-admin.py startapp loan_manager"
+# docker-compose run --rm app sh -c "django-admin.py startproject app ."
+# docker-compose run --rm app sh -c "python manage.py startapp core"
+# docker-compose run --rm app sh -c "python manage.py startapp user"
+# docker-compose run app sh -c "python manage.py startapp bank_manager"
+# docker-compose run app sh -c "python manage.py startapp customer_manager"
+# docker-compose run app sh -c "python manage.py startapp loan_manager"
 # docker-compose run app sh -c "python manage.py createsuperuser"
 # docker-compose run app sh -c "python manage.py collectstatic"
 # docker-compose run app sh -c "python manage.py makemigrations"
