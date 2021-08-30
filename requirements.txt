@@ -3,6 +3,7 @@
 # https://github.com/SimpleJWT/drf-SimpleJWT-React/tree/master/server
 
 django
+psycopg2
 uuid
 djangorestframework
 djangorestframework_simplejwt

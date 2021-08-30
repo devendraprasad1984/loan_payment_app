@@ -63,7 +63,6 @@ SWAGGER_SETTINGS = {
     },
 }
 
-
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
@@ -140,13 +139,19 @@ RUN_ON = 'heroku'
 sqlitedb = 'test.sqlite3'
 
 ENGINE = 'django.db.backends.postgresql'
-DBNAME = 'geek_trust_loans'
-UNAME = 'dpadmin'
-HOST = 'localhost'
 PORT = 5432
-PWD = 'admin'
-
 if RUN_ON == 'postgres_local':
+    DBNAME = 'geek_trust_loans'
+    UNAME = 'dpadmin'
+    HOST = 'localhost'
+    PWD = 'admin'
+elif RUN_ON == 'postgres_docker':
+    DBNAME = os.environ.get('DB_NAME')
+    UNAME = os.environ.get('DB_USER')
+    HOST = os.environ.get('DB_HOST')
+    PWD = os.environ.get('DB_PASSWORD')
+
+if RUN_ON in ['postgres_local', 'postgres_docker']:
     DATABASES = {
         'default': {
             'ENGINE': ENGINE,
