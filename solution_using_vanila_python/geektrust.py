@@ -42,10 +42,8 @@ LEDGER = []
 DEFAULT_CUSTOMER_LOAN_LIMIT = 10000000
 PRINT_LOG_WITH_TIMESTAMP = False
 
-
 def get_timestamp():
     return datetime.now().strftime(TIMESTAMP_LOG_FORMAT)
-
 
 def print_log(args):
     print_time = get_timestamp()
@@ -54,10 +52,8 @@ def print_log(args):
     else:
         print(f'{args.__str__()}')
 
-
 def print_object_wrapper(param1=None, param2=None):
     return {'msg': param1, 'param': param2}
-
 
 def read_input_file_contents(filename):
     f = open(filename, "r")
@@ -65,12 +61,10 @@ def read_input_file_contents(filename):
     f.close()
     return file_contents
 
-
 def insert_new_loan(new_loan_object):
     new_id = LEDGER.__len__() + 1
     new_object = {key_id: new_id, key_object: new_loan_object}
     LEDGER.insert(new_id - 1, new_object)
-
 
 def insert_new_bank_customer(object, name):
     find = list(filter(lambda row: row[key_name] == name, object))
@@ -79,7 +73,6 @@ def insert_new_bank_customer(object, name):
     new_object = {key_id: new_id, key_name: name}
     object.insert(new_id - 1, new_object)
     return new_id
-
 
 def find_bank_customer_loan_object(object, name=None, id=None, loan_id=None):
     find = []
@@ -93,10 +86,8 @@ def find_bank_customer_loan_object(object, name=None, id=None, loan_id=None):
     if find.__len__() != 0: return {key_found: True, key_object: find[0]}
     return {key_found: False}
 
-
 def get_bank_id(name):
     return insert_new_bank_customer(BANKS, name)
-
 
 def get_customer_id(name):
     id = insert_new_bank_customer(CUSTOMERS, name)
@@ -104,7 +95,6 @@ def get_customer_id(name):
     if obj[key_found] == False: return -1
     obj[key_object][key_limit] = DEFAULT_CUSTOMER_LOAN_LIMIT
     return id
-
 
 def get_loan_detail(customer_name=None, bank_name=None):
     customer_object = find_bank_customer_loan_object(CUSTOMERS, name=customer_name)
@@ -115,7 +105,6 @@ def get_loan_detail(customer_name=None, bank_name=None):
     customer_loan = find_bank_customer_loan_object(LEDGER, loan_id=loan_id)
     customer_loan_object = customer_loan[key_object][key_object]
     return customer_loan[key_found], customer_loan_object
-
 
 def handle_loan(command):
     if command.__len__() != 6: return
@@ -155,7 +144,6 @@ def handle_loan(command):
     print_log(f'LOAN sanctioned for {customer_name}({customer_id}) from {bank_name}({bank_id}) for amount {amount} @ {rate_of_interest} '
               f'for {no_of_years} years. emi: {emi_amount} for {emi_months} months. P+I: {total_amount_pi}, I: {total_interest}')
 
-
 def handle_balance(command):
     if command.__len__() != 4: return
     bank_name = command[1]
@@ -173,7 +161,6 @@ def handle_balance(command):
               f'and remaining {amount_remaining}. Total emis paid are {emi_number} and '
               f'remaining are {emi_remaining}')
 
-
 def handle_payment(command):
     if command.__len__() != 5: return
     bank_name = command[1]
@@ -182,7 +169,8 @@ def handle_payment(command):
     emi_number = int(command[4])
 
     flag, customer_loan = get_loan_detail(customer_name=customer_name, bank_name=bank_name)
-    if flag == False: return
+    if flag == False:
+        return
 
     emi_amount = int(customer_loan[key_emi_amount])
     if emi_payment < emi_amount:
@@ -190,24 +178,26 @@ def handle_payment(command):
         return
     emi_months_repaid = int(customer_loan[key_emi_months_repaid]) + emi_number
     emi_months_remaining = int(customer_loan[key_emi_months]) - emi_months_repaid
-    amount_repaid = float(customer_loan[key_repaid_amount]) + round(float(customer_loan[key_emi_amount]) * emi_number)
+    amount_repaid = float(customer_loan[key_repaid_amount]) + emi_payment
+    total_pi_remaining = float(customer_loan[key_total_amount_pi]) - emi_payment
 
     loan_update_object = {
         key_emi_months: emi_months_remaining,
         key_emi_months_repaid: emi_months_repaid,
         key_repaid_amount: amount_repaid,
+        key_total_amount_pi: total_pi_remaining
     }
     customer_loan.update(loan_update_object)
     print_log(
-        f'PAYEMENT: {customer_name} from {bank_name}, an emi {emi_amount} and its '
-    )
+        f'PAYEMENT of {emi_payment} received from {customer_name}, who borrowed {customer_loan[key_loan_amount]} from {bank_name}.'
+        f' His remaining loan details are: repaid: {amount_repaid}, remaining period: {emi_months_remaining}, P+I: {total_pi_remaining}'
 
+    )
 
 def get_command_handler(command):
     if command == TYPE_LOAN: return handle_loan
     if command == TYPE_BALANCE: return handle_balance
     if command == TYPE_PAYMENT: return handle_payment
-
 
 def print_base_objects():
     print('-' * 80)
@@ -216,14 +206,12 @@ def print_base_objects():
     print_log(f'checking LOANS {LEDGER}')
     print('-' * 80)
 
-
 def process_ledger_commands(commands):
     for command in commands:
         if command == '': continue
         command_keys = command.split(' ')
         command_handler = get_command_handler(command_keys[0])
         command_handler(command_keys)
-
 
 def main():
     args_length = sys.argv.__len__()
@@ -232,7 +220,6 @@ def main():
     input_ledger_commands = read_input_file_contents(input_file_name)
     process_ledger_commands(input_ledger_commands)
     print_base_objects()
-
 
 if __name__ == "__main__":
     main()
