@@ -20,14 +20,6 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
-
-# from rest_framework_swagger.views import get_swagger_view
-# from rest_framework.schemas import get_schema_view
-# from rest_framework_swagger.renderers import SwaggerUIRenderer, OpenAPIRenderer
-
-
-# schema_view = get_swagger_view(title='GeekTrust Ledger.co API docs')
-# schema_view = get_schema_view(title='GeekTrust Ledger.co API docs', renderer_classes=[CoreJSONRenderer])
 schema_view = get_schema_view(
     openapi.Info(
         title="Geek Trust Ledger.co API",
@@ -43,7 +35,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/user', include('user.urls')),
+    path('api/user/', include('user.urls')),
     path('banks/', include("bank_manager.urls")),
     path('customers/', include("customer_manager.urls")),
     path('onboard/', include("subscribe.urls")),
