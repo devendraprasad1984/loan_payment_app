@@ -18,7 +18,13 @@ class PublicUserApiTests(TestCase):
 
 
     def setUp(self):
+        """will be called before test runs"""
         self.client = APIClient()
+
+
+    def tearDown(self) -> None:
+        """will be called after test runs"""
+        pass
 
 
     def test_create_valid_user_success(self):
