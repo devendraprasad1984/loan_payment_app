@@ -51,10 +51,11 @@ INSTALLED_APPS = [
 
     'core',
     'user',
+    'dummy',
     'loan_manager',
     'bank_manager',
     'customer_manager',
-    'subscribe'
+    'subscribe',
 ]
 
 SWAGGER_SETTINGS = {
