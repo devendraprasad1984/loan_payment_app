@@ -13,3 +13,4 @@ django-cors-headers
 drf-yasg
 drf-yasg[validation]
 flake8
+Pillow>=5.3.0,<5.4.0
