@@ -6,7 +6,7 @@ from core import models
 from dummy import serializers
 
 
-class BaseRecipeAttrViewSet(viewsets.GenericViewSet,
+class BaseDummyAttrViewSet(viewsets.GenericViewSet,
                             mixins.ListModelMixin,
                             mixins.CreateModelMixin):
     """Base viewset for user owned attributes"""
@@ -24,13 +24,13 @@ class BaseRecipeAttrViewSet(viewsets.GenericViewSet,
         serializer.save(user=self.request.user)
 
 
-class TagViewSet(BaseRecipeAttrViewSet):
+class TagViewSet(BaseDummyAttrViewSet):
     """Manage tags in the database"""
     queryset = models.Tag.objects.all()
     serializer_class = serializers.TagSerializer
 
 
-class IngredientViewSet(BaseRecipeAttrViewSet):
+class IngredientViewSet(BaseDummyAttrViewSet):
     """Manage ingredients in the database"""
     queryset = models.Ingredient.objects.all()
     serializer_class = serializers.IngredientSerializer
