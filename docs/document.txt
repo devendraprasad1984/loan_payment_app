@@ -21,6 +21,7 @@ heroku login
 heroku create
 git remote -v
 heroku git:remote -a test-loan-ledger-dp
+heroku config:set DISABLE_COLLECTSTATIC=1
 git push heroku main
 renaming: git remote rename heroku heroku-staging
 heroku ps:scale web=1 --app test-loan-ledger-dp
