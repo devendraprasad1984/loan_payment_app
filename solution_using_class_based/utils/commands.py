@@ -4,9 +4,14 @@ from solution_using_class_based.utils import enums
 
 class Commands(enums.Enums):
     """processing commands logic"""
-    handler=None
-    bank_name=None
-    customer_name=None
+    handler = None
+    bank_name = None
+    customer_name = None
+    BANKS = []
+    CUSTOMERS = []
+    LEDGER = []
+    prepared_objects = {}
+
 
     def __init__(self, commands=None):
         self.commands = commands
@@ -27,3 +32,10 @@ class Commands(enums.Enums):
             print(self.bank_name, self.customer_name)
             command_handler = self._get_command_handler(command_keys[0])
             command_handler.handle()
+
+        self.prepared_objects = {
+            'banks': self.BANKS,
+            'customers': self.CUSTOMERS,
+            'ledgers': self.LEDGER,
+        }
+        return self.prepared_objects

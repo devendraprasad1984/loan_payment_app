@@ -3,16 +3,11 @@ import sys
 from solution_using_class_based.utils import commands, utils
 
 
-BANKS = []
-CUSTOMERS = []
-LEDGER = []
-
-
-def print_all():
-    """print all objects"""
-    objects = [BANKS, CUSTOMERS, LEDGER]
-    for obj in objects:
-        print(obj, obj.serialize())
+def print_all(final_object: {}):
+    """print all objects, BANKS, CUSTOMERS, LEDGERS"""
+    if final_object.__len__() == 0: return
+    for obj in final_object.values():
+        print(obj.__str__(), obj.serialize())
 
 
 def main():
@@ -24,7 +19,8 @@ def main():
     input_ledger_commands = util.read_input_file_contents(input_file_name)
 
     command = commands.Commands(input_ledger_commands)
-    command.process_ledger_commands()
+    final_object = command.process_ledger_commands()
+    print_all(final_object=final_object)
 
 
 if __name__ == "__main__":
