@@ -8,11 +8,11 @@ class Bank(enums.Enums):
     uid = None
 
 
-    def __init__(self, name):
+    def __init__(self, id, name):
         """initialize the filelds"""
         self.name = name
-        self.id = 1
-        self.uid=utils.Utils(8).get_secret_key()
+        self.id = id
+        self.uid = utils.Utils(8).get_secret_key()
 
 
     def __str__(self):

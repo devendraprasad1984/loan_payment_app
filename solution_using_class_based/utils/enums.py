@@ -27,8 +27,5 @@ class Enums():
     TYPE_BALANCE = 'BALANCE'
     TYPE_PAYMENT = 'PAYMENT'
     TIMESTAMP_LOG_FORMAT = "%Y_%m_%d-%I:%M:%S_%p"
-    BANKS = []
-    CUSTOMERS = []
-    LEDGER = []
     DEFAULT_CUSTOMER_LOAN_LIMIT = 10000000
     PRINT_LOG_WITH_TIMESTAMP = False
