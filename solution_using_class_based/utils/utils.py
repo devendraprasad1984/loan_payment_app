@@ -38,3 +38,4 @@ class Utils(enums.Enums):
         file_contents = f.read().splitlines()
         f.close()
         return file_contents
+
