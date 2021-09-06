@@ -1,4 +1,4 @@
-from solution_using_class_based.factory.command_handler import CommandHandler
+from solution_using_class_based.factory.command_handler import CommandHandlerFactory
 from solution_using_class_based.models import bank, customer, loan
 from solution_using_class_based.utils import checkers, enums
 
@@ -43,7 +43,7 @@ class Commands(enums.Enums, checkers.Checker):
                 period=26,
             ))
             # process and handle command LOAN, PAYMENT, BALANCE
-            command_handler = CommandHandler(command_keys[0]).get()
+            command_handler = CommandHandlerFactory(command_keys[0]).get()
             command_handler.handle()
 
         self.prepared_objects = {

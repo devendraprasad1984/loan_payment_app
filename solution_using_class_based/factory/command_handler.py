@@ -2,7 +2,7 @@ from solution_using_class_based.processor import balance as BalanceProcessor, lo
 from solution_using_class_based.utils.enums import Enums
 
 
-class CommandHandler(Enums):
+class CommandHandlerFactory(Enums):
     """return relevant command handler class"""
     command_type = None
 
