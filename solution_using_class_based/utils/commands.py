@@ -3,6 +3,17 @@ from solution_using_class_based.processor import balance, loan, payment
 from solution_using_class_based.utils import enums
 
 
+def check_present_of_same_name_object(object=None, name=None):
+    if object == None or name == None: return False
+
+    found = False
+    for b in object:
+        if b.get_name() == name:
+            found = True
+            break
+    return found
+
+
 class Commands(enums.Enums):
     """processing commands logic"""
     handler = None
@@ -22,6 +33,18 @@ class Commands(enums.Enums):
         if command == self.TYPE_PAYMENT: return payment.PaymentHandler()
 
 
+    def _add_bank_if_missing(self, name):
+        # hold bank details
+        if check_present_of_same_name_object(self.BANKS, name) == False:
+            self.BANKS.append(bank.Bank(id=self.BANKS.__len__(), name=name))
+
+
+    def _add_customer_if_missing(self, name):
+        # hold customer details
+        if check_present_of_same_name_object(self.CUSTOMERS, name) == False:
+            self.CUSTOMERS.append(customer.Customer(id=self.CUSTOMERS.__len__(), name=name))
+
+
     def process_ledger_commands(self):
         for cmd in self.commands:
             if cmd == '': continue
@@ -29,22 +52,9 @@ class Commands(enums.Enums):
             bank_name = command_keys[1]
             customer_name = command_keys[2]
 
-            # hold bank details
-            self.BANKS.append(bank.Bank(
-                id=self.BANKS.__len__(),
-                name=bank_name
-            ))
-            # hold customer details
-            self.CUSTOMERS.append(customer.Customer(
-                id=self.CUSTOMERS.__len__(),
-                name=customer_name
-            ))
-
-            # hold ledger details
-            self.LEDGER.append(ledger.Ledger(
-                id=self.LEDGER.__len__(),
-                name=customer_name
-            ))
+            self._add_bank_if_missing(name=bank_name);
+            self._add_customer_if_missing(name=customer_name)
+            self.LEDGER.append(ledger.Ledger(id=self.LEDGER.__len__(), name=customer_name))
 
             # process and handle command LOAN, PAYMENT, BALANCE
             command_handler = self._get_command_handler(command_keys[0])
