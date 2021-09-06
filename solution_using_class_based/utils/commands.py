@@ -1,5 +1,5 @@
-from solution_using_class_based.models import bank, customer, ledger
-from solution_using_class_based.processor import balance, loan, payment
+from solution_using_class_based.models import bank, customer, loan
+from solution_using_class_based.processor import balance, loan as LoanProcessor, payment
 from solution_using_class_based.utils import checkers, enums
 
 
@@ -8,7 +8,7 @@ class Commands(enums.Enums, checkers.Checker):
     handler = None
     _BANKS = []
     _CUSTOMERS = []
-    _LEDGER = []
+    _LOANS = []
     prepared_objects = {}
 
 
@@ -17,7 +17,7 @@ class Commands(enums.Enums, checkers.Checker):
 
 
     def _get_command_handler(self, command):
-        if command == self.TYPE_LOAN: return loan.LoanHandler()
+        if command == self.TYPE_LOAN: return LoanProcessor.LoanHandler()
         if command == self.TYPE_BALANCE: return balance.BalanceHandler()
         if command == self.TYPE_PAYMENT: return payment.PaymentHandler()
 
@@ -43,8 +43,12 @@ class Commands(enums.Enums, checkers.Checker):
 
             self._add_bank_if_missing(name=bank_name)
             self._add_customer_if_missing(name=customer_name)
-            self._LEDGER.append(ledger.Ledger(id=self._LEDGER.__len__(), name=customer_name))
-
+            self._LOANS.append(loan.Loan(
+                id='1_1',
+                loan_amount=10000,
+                rate=5.0,
+                period=26,
+            ))
             # process and handle command LOAN, PAYMENT, BALANCE
             command_handler = self._get_command_handler(command_keys[0])
             command_handler.handle()
@@ -52,6 +56,6 @@ class Commands(enums.Enums, checkers.Checker):
         self.prepared_objects = {
             'banks': self._BANKS,
             'customers': self._CUSTOMERS,
-            'ledgers': self._LEDGER,
+            'ledgers': self._LOANS,
         }
         return self.prepared_objects

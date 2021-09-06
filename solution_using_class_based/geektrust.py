@@ -4,7 +4,7 @@ from solution_using_class_based.utils import commands, utils
 
 
 def print_all(final_object: {}):
-    """print all objects, BANKS, CUSTOMERS, LEDGERS"""
+    """print all objects, BANKS, CUSTOMERS, LOANS"""
     if final_object.__len__() == 0: return
     util = utils.Utils()
     for obj in final_object.values():
