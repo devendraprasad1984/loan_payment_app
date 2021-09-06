@@ -21,7 +21,7 @@ class Utils(enums.Enums):
         return datetime.now().strftime(self.TIMESTAMP_LOG_FORMAT)
 
 
-    def print_log(self, args):
+    def print_log(self, **args):
         print_time = self.get_timestamp()
         if self.PRINT_LOG_WITH_TIMESTAMP:
             print(f'log {print_time}: {args.__str__()}')

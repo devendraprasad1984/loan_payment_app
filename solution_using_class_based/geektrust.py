@@ -6,9 +6,11 @@ from solution_using_class_based.utils import commands, utils
 def print_all(final_object: {}):
     """print all objects, BANKS, CUSTOMERS, LEDGERS"""
     if final_object.__len__() == 0: return
+    util = utils.Utils()
     for obj in final_object.values():
         for _ in obj:
-            print(_.__str__(), _.serialize())
+            msg = {"message": _.__str__(), "data": _.serialize()}
+            util.print_log(**msg)
 
 
 def main():
