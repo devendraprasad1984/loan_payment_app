@@ -8,19 +8,11 @@ CUSTOMERS = []
 LEDGER = []
 
 
-def get_banks():
-    for _ in BANKS:
-        print(_.serialize())
-
-
-def get_customers():
-    for _ in CUSTOMERS:
-        print(_.serialize())
-
-
-def get_ledgers():
-    for _ in LEDGER:
-        print(_.serialize())
+def print_all():
+    """print all objects"""
+    objects = [BANKS, CUSTOMERS, LEDGER]
+    for obj in objects:
+        print(obj, obj.serialize())
 
 
 def main():
@@ -32,7 +24,7 @@ def main():
     input_ledger_commands = util.read_input_file_contents(input_file_name)
 
     command = commands.Commands(input_ledger_commands)
-    command.process_ledger_commands(input_ledger_commands)
+    command.process_ledger_commands()
 
 
 if __name__ == "__main__":

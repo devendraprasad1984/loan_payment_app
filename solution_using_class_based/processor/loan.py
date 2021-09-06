@@ -6,3 +6,6 @@ class LoanHandler(enums.Enums):
 
     def __init__(self):
         pass
+
+    def handle(self):
+        print('handling loan')
