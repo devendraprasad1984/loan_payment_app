@@ -16,7 +16,7 @@ class Bank(enums.Enums):
 
 
     def __str__(self):
-        return f'bank {self.name}, has id {id}'
+        return f'bank {self.name}, has id {self.id}'
 
 
     def serialize(self):

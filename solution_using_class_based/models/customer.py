@@ -16,7 +16,7 @@ class Customer(enums.Enums):
 
 
     def __str__(self):
-        return f'customer {self.name}, has id {id}'
+        return f'customer {self.name}, has id {self.id}'
 
 
     def serialize(self):

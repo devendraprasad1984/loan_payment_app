@@ -1,7 +1,7 @@
 from solution_using_class_based.utils import enums, utils
 
 
-class Bank(enums.Enums):
+class Ledger(enums.Enums):
     """store ledger entity details"""
     id = None
     name = None
@@ -16,7 +16,7 @@ class Bank(enums.Enums):
 
 
     def __str__(self):
-        return f'ledger {self.name}, has id {id}'
+        return f'ledger {self.name}, has id {self.id}'
 
 
     def serialize(self):

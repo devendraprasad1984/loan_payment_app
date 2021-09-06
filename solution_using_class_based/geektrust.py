@@ -7,7 +7,8 @@ def print_all(final_object: {}):
     """print all objects, BANKS, CUSTOMERS, LEDGERS"""
     if final_object.__len__() == 0: return
     for obj in final_object.values():
-        print(obj.__str__(), obj.serialize())
+        for _ in obj:
+            print(_.__str__(), _.serialize())
 
 
 def main():

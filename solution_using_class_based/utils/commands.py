@@ -1,3 +1,4 @@
+from solution_using_class_based.models import bank, customer, ledger
 from solution_using_class_based.processor import balance, loan, payment
 from solution_using_class_based.utils import enums
 
@@ -5,8 +6,6 @@ from solution_using_class_based.utils import enums
 class Commands(enums.Enums):
     """processing commands logic"""
     handler = None
-    bank_name = None
-    customer_name = None
     BANKS = []
     CUSTOMERS = []
     LEDGER = []
@@ -27,9 +26,27 @@ class Commands(enums.Enums):
         for cmd in self.commands:
             if cmd == '': continue
             command_keys = cmd.split(' ')
-            self.bank_name = command_keys[1]
-            self.customer_name = command_keys[2]
-            print(self.bank_name, self.customer_name)
+            bank_name = command_keys[1]
+            customer_name = command_keys[2]
+
+            # hold bank details
+            self.BANKS.append(bank.Bank(
+                id=self.BANKS.__len__(),
+                name=bank_name
+            ))
+            # hold customer details
+            self.CUSTOMERS.append(customer.Customer(
+                id=self.CUSTOMERS.__len__(),
+                name=customer_name
+            ))
+
+            # hold ledger details
+            self.LEDGER.append(ledger.Ledger(
+                id=self.LEDGER.__len__(),
+                name=customer_name
+            ))
+
+            # process and handle command LOAN, PAYMENT, BALANCE
             command_handler = self._get_command_handler(command_keys[0])
             command_handler.handle()
 
