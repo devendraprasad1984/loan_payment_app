@@ -1,0 +1,19 @@
+from solution_using_class_based.processor import balance as BalanceProcessor, loan as LoanProcessor, payment as PaymentProcessor
+from solution_using_class_based.utils.enums import Enums
+
+
+class CommandHandler(Enums):
+    """return relevant command handler class"""
+    command_type = None
+
+
+    def __init__(self, type):
+        self.command_type = type
+
+
+    def get(self):
+        handler = None
+        if self.command_type == self.TYPE_LOAN: handler = LoanProcessor.LoanHandler()
+        if self.command_type == self.TYPE_BALANCE: handler = BalanceProcessor.BalanceHandler()
+        if self.command_type == self.TYPE_PAYMENT: handler = PaymentProcessor.PaymentHandler()
+        return handler
