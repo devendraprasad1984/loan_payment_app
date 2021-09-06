@@ -9,7 +9,7 @@ class Customer(enums.Enums):
 
 
     def __init__(self, id, name):
-        """initialize the filelds"""
+        """initialize the fields"""
         self.name = name
         self.id = id
         self.uid = utils.Utils(8).get_secret_key()
