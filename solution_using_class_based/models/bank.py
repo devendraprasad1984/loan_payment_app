@@ -1,7 +1,8 @@
+from solution_using_class_based.serializers.iSerialize import ISerialize
 from solution_using_class_based.utils import enums, utils
 
 
-class Bank(enums.Enums):
+class Bank(enums.Enums, ISerialize):
     """store bank entity details"""
     id = None
     name = None

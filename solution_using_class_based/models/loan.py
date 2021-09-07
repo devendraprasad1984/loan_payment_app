@@ -1,7 +1,8 @@
+from solution_using_class_based.serializers.iSerialize import ISerialize
 from solution_using_class_based.utils import enums, utils
 
 
-class Loan(enums.Enums):
+class Loan(enums.Enums, ISerialize):
     """store ledger entity details"""
     _loan_id = None
     _uid = None

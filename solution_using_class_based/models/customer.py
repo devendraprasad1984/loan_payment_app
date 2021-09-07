@@ -1,7 +1,8 @@
+from solution_using_class_based.serializers.iSerialize import ISerialize
 from solution_using_class_based.utils import enums, utils
 
 
-class Customer(enums.Enums):
+class Customer(enums.Enums, ISerialize):
     """store customer entity details"""
     id = None
     name = None
