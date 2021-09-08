@@ -47,6 +47,8 @@ class Commands(enums.Enums, checkers.Checker):
             params = {
                 self.key_command: command_keys,
                 self.key_loan: loan_id,
+                self.key_bank_id: bank_id,
+                self.key_customer_id: customer_id,
                 self.key_loan_object: self._LOANS
             }
             command_handler.handle(**params)

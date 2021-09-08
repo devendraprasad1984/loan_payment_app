@@ -23,11 +23,7 @@ def main():
 
     command = commands.Commands(input_ledger_commands)
     final_object = command.process_ledger_commands()
-    print_all(final_object['ledgers'])
-    # print_all(final_object['banks'])
-    # print_all(final_object['customers'])
-    # print_all(final_object['output'])
-
+    # print_all(final_object['ledgers'])
 
 
 if __name__ == "__main__":

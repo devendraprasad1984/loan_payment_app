@@ -4,7 +4,7 @@ from solution_using_class_based.utils import enums, utils
 
 class Loan(enums.Enums, ISerialize):
     """store loan ledger entity details"""
-    
+
     _loan_id = None
     _uid = None
     _customer_id = None
@@ -18,7 +18,7 @@ class Loan(enums.Enums, ISerialize):
     _interest = 0
     _repaid_amount = 0
     _total_amount_pi = None
-    _active = None
+    _active = True
     _no_of_years = None
     _total_interest = None
 
@@ -30,9 +30,10 @@ class Loan(enums.Enums, ISerialize):
                  period=None,
                  ):
         """initialize the fields"""
+        ids_arr = id.split('_')
         self._loan_id = id  # eg 1_1, <bankid>_<customerid>
-        self._bank_id = id.split('_')[0]  #
-        self._customer_id = id.split('_')[1]
+        self._bank_id = ids_arr[0]  #
+        self._customer_id = ids_arr[1]
         self._uid = utils.Utils(8).get_secret_key()
 
         self._loan_amount = float(loan_amount)
@@ -47,6 +48,18 @@ class Loan(enums.Enums, ISerialize):
         self._total_amount_pi = self._loan_amount + self._total_interest
         self._emi_amount = round(self._total_amount_pi / self._emi_months)
         return self
+
+
+    def get_bank_id(self):
+        return self._bank_id
+
+
+    def get_loan_id(self):
+        return self._loan_id
+
+
+    def get_customer_id(self):
+        return self._customer_id
 
 
     def __str__(self):
