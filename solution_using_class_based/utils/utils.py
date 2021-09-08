@@ -39,3 +39,17 @@ class Utils(enums.Enums):
         f.close()
         return file_contents
 
+
+    def print_all_serialize(self, listOfObjects: []):
+        """print objects via their serialize call"""
+        if listOfObjects.__len__() == 0: return
+        for obj in listOfObjects:
+            msg = {"message": obj.__str__(), "data": obj.serialize()}
+            self.print_log(**msg)
+
+
+    def print_lists(self, listOfObjects: []):
+        """print list values"""
+        if listOfObjects.__len__() == 0: return
+        for obj in listOfObjects:
+            print(obj.__str__())

@@ -32,20 +32,25 @@ class Enums():
     DEFAULT_CUSTOMER_LOAN_LIMIT = 10000000
     PRINT_LOG_WITH_TIMESTAMP = False
 
-    _loan_id = '_loan_id'
-    _uid = '_uid'
-    _customer_id = '_customer_id'
-    _bank_id = '_bank_id'
-    _emi_months = '_emi_months'
-    _emi_months_repaid = '_emi_months_repaid'
-    _loan_amount = '_loan_amount'
-    _emi_amount = '_emi_amount'
-    _rate = '_rate'
-    _period = '_period'
-    _interest = '_interest'
-    _repaid_amount = '_repaid_amount'
-    _total_amount_pi = '_total_amount_pi'
-    _loan_amount_left = '_loan_amount_left'
-    _active = '_active'
-    _no_of_years = '_no_of_years'
-    _total_interest = '_total_interest'
+    loan_id = '_loan_id'
+    uid = '_uid'
+    customer_id = '_customer_id'
+    bank_id = '_bank_id'
+    emi_months = '_emi_months'
+    emi_months_repaid = '_emi_months_repaid'
+    loan_amount = '_loan_amount'
+    emi_amount = '_emi_amount'
+    rate = '_rate'
+    period = '_period'
+    interest = '_interest'
+    repaid_amount = '_repaid_amount'
+    total_amount_pi = '_total_amount_pi'
+    loan_amount_left = '_loan_amount_left'
+    active = '_active'
+    no_of_years = '_no_of_years'
+    total_interest = '_total_interest'
+    key_balance_output = 'key_balance_output'
+
+
+    def __str__(self):
+        return self.__dict__

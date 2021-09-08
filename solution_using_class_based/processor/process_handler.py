@@ -19,6 +19,7 @@ class ProcessHandler(Enums):
         """handle derived classes handler logic"""
         self._this_command_type = type
         self._this_loan_object_list = kwargs[self.key_loan_object]
+        self._this_balance_output = kwargs[self.key_balance_output]
         self._this_command = kwargs[self.key_command]
         self._this_loan_id = kwargs[self.key_loan]
         self._bank_id = kwargs[self.key_bank_id]
@@ -53,8 +54,11 @@ class ProcessHandler(Enums):
         """processing balance query"""
         if self._this_command_type != self.TYPE_BALANCE: return
         emi_number = self._this_command[3]
-        cur = self._get_loan_object()
-        # print(self._this_command_type, cur)
+        cur = self._get_loan_object().serialize()
+        amount_paid = int(cur[self.repaid_amount])
+        emi_left = int(cur[self.emi_months]) - int(emi_number)
+        output = f'{self._bank_name} {self._customer_name} {amount_paid} {emi_left}'
+        self._this_balance_output.append(output)
 
 
     def _process_payment(self):
@@ -63,13 +67,18 @@ class ProcessHandler(Enums):
         lump_sum_amount = self._this_command[3]
         emi_number = self._this_command[4]
         cur = self._get_loan_object()
-        cur = cur.update(lump_sum_payment=lump_sum_amount, emi_months=emi_number)
-        print(self._this_command_type, cur.serialize())
+        cur.update(lump_sum_payment=lump_sum_amount, emi_months=emi_number)
+        # print(self._this_command_type, cur.serialize())
 
 
     def processed_loan_object(self):
         """return final modified processed loan object having updated values for loan, balance and payment queries"""
         return self._this_loan_object_list
+
+
+    def processed_output_balancing(self):
+        """return balances output"""
+        return self._this_balance_output
 
 
     def _get_loan_object(self):
