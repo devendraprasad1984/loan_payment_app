@@ -6,7 +6,7 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view
 
 from loan_payments import params
-from loan_payments.common import utils, field_names, lookup
+from loan_payments.common import field_names, lookup, utils
 from . import models
 
 
@@ -20,7 +20,7 @@ msg_entity_doesnt_exist = {
 @swagger_auto_schema(methods=[params.post_], request_body=params.add_loan_req_body, manual_parameters=[params.param_signer_ref], operation_description=params.add_loan_desc)
 @api_view([params.post_])
 @utils.manager_check_signer_middleware()
-def fn_LOAN(req):
+def fn_loan(req):
     if req.method == utils.GET:
         return res(utils.NO_OP_ALLOWED)
     body = utils.getBodyFromReq(req)
@@ -104,7 +104,7 @@ def fn_LOAN(req):
 @swagger_auto_schema(methods=[params.post_], request_body=params.set_loan_payment_req_body, manual_parameters=[params.param_signer_ref], operation_description=params.set_loan_payment_desc)
 @api_view([params.post_])
 @utils.borrower_check_signer_middleware()
-def fn_PAYMENT(req):
+def fn_payment(req):
     if req.method == utils.GET:
         return res(utils.NO_OP_ALLOWED)
 
@@ -182,7 +182,7 @@ def fn_PAYMENT(req):
 @swagger_auto_schema(methods=[params.post_], request_body=params.get_loan_balance_req_body, manual_parameters=[params.param_signer_ref], operation_description=params.get_loan_balance_desc)
 @api_view([params.post_])
 @utils.borrower_check_signer_middleware()
-def fn_BALANCE(req):
+def fn_balance(req):
     if req.method == utils.GET:
         return res(utils.NO_OP_ALLOWED)
 

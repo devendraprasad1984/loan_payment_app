@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view
 
 from customer_manager import models
 from loan_payments import params
-from loan_payments.common import utils, field_names, lookup
+from loan_payments.common import field_names, lookup, utils
 from .validations import validate as customerValidations
 
 
@@ -16,7 +16,7 @@ from .validations import validate as customerValidations
 @swagger_auto_schema(methods=[params.post_], request_body=params.add_customer_req_body, manual_parameters=[params.param_signer_ref], operation_description=params.add_customer_desc)
 @api_view([params.post_])
 @utils.manager_check_signer_middleware()
-def fn_ADD_CUSTOMER(req):
+def fn_add_customer(req):
     if req.method == 'GET':
         return res(utils.NO_OP_ALLOWED)
 
@@ -68,7 +68,7 @@ def fn_ADD_CUSTOMER(req):
 @swagger_auto_schema(methods=[params.get_], manual_parameters=[params.param_signer_ref], operation_description=params.get_customer_by_id_desc)
 @api_view([params.get_])
 @utils.manager_check_signer_middleware()
-def fn_GET_LIST_of_CUSTOMERS(req, id=None):
+def fn_get_list_of_customers(req, id=None):
     if req.method == utils.POST:
         return res(utils.NO_OP_ALLOWED)
     output = lookup.run_customer_loan_query(**{"id": id})
@@ -79,7 +79,7 @@ def fn_GET_LIST_of_CUSTOMERS(req, id=None):
 @swagger_auto_schema(methods=[params.get_], manual_parameters=[params.param_signer_ref], operation_description=params.get_customer_by_loan_ref_desc)
 @api_view([params.get_])
 @utils.manager_check_signer_middleware()
-def fn_GET_CUSTOMER_LOAN(req, loan_ref=None):
+def fn_get_customer_loan(req, loan_ref=None):
     if req.method == utils.POST:
         return res(utils.NO_OP_ALLOWED)
     output = lookup.run_customer_loan_query(**{field_names.loan_ref: loan_ref})

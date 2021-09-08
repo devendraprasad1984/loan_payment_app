@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view
 
 from bank_manager import models
 from loan_payments import params
-from loan_payments.common import utils, field_names, lookup
+from loan_payments.common import field_names, lookup, utils
 from .validations import validate as bankValidations
 
 
@@ -17,7 +17,7 @@ from .validations import validate as bankValidations
 @swagger_auto_schema(methods=[params.post_], request_body=params.add_bank_req_body, manual_parameters=[params.param_signer_ref], operation_description=params.add_bank_desc)
 @api_view([params.post_])
 @utils.manager_check_signer_middleware()
-def fn_ADD_BANK(req: HttpRequest):
+def fn_add_bank(req: HttpRequest):
     if req.method == utils.GET:
         return res(utils.NO_OP_ALLOWED)
     body = utils.getBodyFromReq(req)
@@ -59,7 +59,7 @@ def fn_ADD_BANK(req: HttpRequest):
 @swagger_auto_schema(methods=[params.get_], manual_parameters=[params.param_signer_ref], operation_description=params.bank_list_desc)
 @api_view([params.get_])
 @utils.manager_check_signer_middleware()
-def fn_GET_LIST_of_BANKS(req):
+def fn_get_list_of_banks(req):
     if req.method == utils.POST:
         return res(utils.NO_OP_ALLOWED)
     data = utils.getJsonSet(models.BANKS.objects.only(field_names.id, field_names.name, field_names.uid, field_names.when).order_by(field_names.id))

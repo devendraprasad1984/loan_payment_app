@@ -8,13 +8,13 @@ from rest_framework.decorators import api_view
 from rest_framework_simplejwt import tokens as jwtsimple
 
 from loan_payments import params
-from loan_payments.common import utils, field_names, lookup
+from loan_payments.common import field_names, lookup, utils
 from . import models
 from .validations import validate as subscribe_validator
 
 
 # Create your views here.
-def fn_GET_NEW_TOKEN(req: HttpRequest):
+def fn_get_new_token(req: HttpRequest):
     if req.method == utils.POST:
         return res(utils.NO_OP_ALLOWED)
     key = utils.getSecretAccessKey()
@@ -24,7 +24,7 @@ def fn_GET_NEW_TOKEN(req: HttpRequest):
     return res(json.dumps(output), content_type=utils.CONTENT_TYPE)
 
 @csrf_exempt
-def fn_CHECK_API_SIGNER(req: HttpRequest):
+def fn_check_api_signer(req: HttpRequest):
     if req.method == utils.GET:
         return res(utils.NO_OP_ALLOWED)
     body = utils.getBodyFromReq(req)
@@ -42,7 +42,7 @@ def fn_CHECK_API_SIGNER(req: HttpRequest):
 @csrf_exempt
 @swagger_auto_schema(methods=[params.post_], request_body=params.subscription_req_body, operation_description=params.subscription_req_desc)
 @api_view([params.post_])
-def fn_SUBSCRIBE(req: HttpRequest):
+def fn_subscribe(req: HttpRequest):
     if req.method == utils.GET:
         return res(utils.NO_OP_ALLOWED)
     body = utils.getBodyFromReq(req)
@@ -98,7 +98,7 @@ def fn_SUBSCRIBE(req: HttpRequest):
 
 @swagger_auto_schema(methods=[params.get_], operation_description=params.subscription_list_desc)
 @api_view([params.get_])
-def gn_GET_SUBSCRIBERS(req: HttpRequest):
+def fn_get_subscribers(req: HttpRequest):
     if req.method == utils.POST:
         return res(utils.NO_OP_ALLOWED)
     data = utils.getJsonSet(models.SUBSCRIPTION.objects.only(field_names.id, field_names.name, field_names.email, field_names.secret_key, field_names.signer, field_names.when).order_by(field_names.id))
@@ -130,7 +130,7 @@ def gn_GET_SUBSCRIBERS(req: HttpRequest):
 @csrf_exempt
 @swagger_auto_schema(methods=[params.post_], request_body=params.new_jwt_req_body, operation_description=params.new_jwt_req_desc)
 @api_view([params.post_])
-def fn_JWT_TOKEN_PAIR(req):
+def fn_jwt_token_pair(req):
     if req.method == utils.GET:
         return res(utils.NO_OP_ALLOWED)
     # pairs=jwtSerialiser.TokenObtainSerializer(jwt_views.TokenObtainPairView.as_view())
