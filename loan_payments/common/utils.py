@@ -8,8 +8,8 @@ from django.core.signing import Signer
 from django.utils import crypto
 
 from loan_manager import models
-from ..common import field_names, lookup
-from ..middleware import signer_check
+from .common import field_names, lookup
+from .middleware import signer_check
 
 
 failed = "failed"

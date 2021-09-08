@@ -1,8 +1,8 @@
 import os
 import sys
 
-from .app import commands
-from .utils import utils
+from app import commands
+from utils import utils
 
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/..'))

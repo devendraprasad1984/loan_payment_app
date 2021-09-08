@@ -1,5 +1,5 @@
-from .processor import balance as BalanceProcessor, loan as LoanProcessor, payment as PaymentProcessor
-from .utils.enums import Enums
+from processor import balance as BalanceProcessor, loan as LoanProcessor, payment as PaymentProcessor
+from utils.enums import Enums
 
 
 class CommandHandlerFactory(Enums):

@@ -9,7 +9,7 @@ from rest_framework.decorators import api_view
 from bank_manager import models
 from loan_payments import params
 from loan_payments.common import field_names, lookup, utils
-from .validations import validate as bankValidations
+from validations import validate as bankValidations
 
 
 @require_POST

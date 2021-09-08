@@ -1,4 +1,4 @@
-from .processor.process_handler import ProcessHandler
+from processor.process_handler import ProcessHandler
 
 
 class LoanHandler(ProcessHandler):

@@ -1,14 +1,15 @@
 import json
 
+from
 from django.shortcuts import HttpResponse as res
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view
 
+import models
 from loan_payments import params
 from loan_payments.common import field_names, lookup, utils
-from . import models
 
 
 msg_entity_doesnt_exist = {

@@ -1,5 +1,5 @@
-from .serializers.iSerialize import ISerialize
-from .utils import enums, utils
+from serializers.iSerialize import ISerialize
+from utils import enums, utils
 
 
 class Loan(enums.Enums, ISerialize):

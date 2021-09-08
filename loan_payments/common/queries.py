@@ -1,6 +1,8 @@
+from
 from django.db import connection
 
-from . import field_names, utils
+import field_names
+import utils
 
 
 def get_customer_with_loan_query(**param):
