@@ -53,10 +53,10 @@ class ProcessHandler(Enums):
     def _process_balance(self):
         """processing balance query"""
         if self._this_command_type != self.TYPE_BALANCE: return
-        emi_number = self._this_command[3]
+        emi_number = int(self._this_command[3])
         cur = self._get_loan_object().serialize()
-        amount_paid = int(cur[self.repaid_amount])
-        emi_left = int(cur[self.emi_months]) - int(emi_number)
+        amount_paid = (int(cur[self.emi_amount]) * emi_number)
+        emi_left = int(cur[self.emi_months]) - emi_number
         output = f'{self._bank_name} {self._customer_name} {amount_paid} {emi_left}'
         self._this_balance_output.append(output)
 

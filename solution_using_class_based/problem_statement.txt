@@ -76,3 +76,14 @@ IDIDI Dale 3652 4
 UON Shelly 15856 3
 MBI Harry 9044 10
 
+
+{'message': 'ledger -loan 2_2 belongs to customer 2 is taken from bank 2', 'data': {'_loan_id': '2_2', '_bank_id': '2', '_customer_id': '2',
+ '_uid': 'dXFa_46h6AA', '_loan_amount': 10000.0, '_rate': 7.0, '_period': 3, '_emi_months': 26, '_total_interest': 2100, '_total_amount_pi': 12100.0,
+ '_emi_amount': 336, '_emi_months_repaid': 10, '_repaid_amount': 5000.0, '_loan_amount_left': 7100.0}}
+
+
+
+IDIDI Dale 1326 4
+IDIDI Dale 2652 1
+UON Shelly 8856 0
+MBI Harry 4032 14
