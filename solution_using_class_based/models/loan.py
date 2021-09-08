@@ -3,7 +3,8 @@ from solution_using_class_based.utils import enums, utils
 
 
 class Loan(enums.Enums, ISerialize):
-    """store ledger entity details"""
+    """store loan ledger entity details"""
+    
     _loan_id = None
     _uid = None
     _customer_id = None
@@ -37,11 +38,10 @@ class Loan(enums.Enums, ISerialize):
         self._loan_amount = float(loan_amount)
         self._rate = float(rate)
         self._period = int(period)
-        # self._emi_months = self._period * 12
-        # self._emi_amount = round(self._loan_amount * self._period * self._rate / 100)
 
 
     def calculate(self):
+        """calculate few parameters based on input given for loan processing"""
         self._emi_months = self._period * 12
         self._total_interest = round(self._loan_amount * self._period * self._rate / 100)
         self._total_amount_pi = self._loan_amount + self._total_interest
