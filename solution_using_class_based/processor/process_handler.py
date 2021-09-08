@@ -18,11 +18,16 @@ class ProcessHandler(Enums):
         self._this_command = kwargs[self.key_command]
         self._this_loan_id = kwargs[self.key_loan]
 
-        print(f'from child {self._this_command_type} - {self._this_loan_id} - {self._this_command} - {self._this_loan_object}')
+        # print(f'from child {self._this_command_type} - {self._this_loan_id} - {self._this_command} - {self._this_loan_object}')
+        self._process_loan()
+        self._process_payment()
+        self._process_balance()
 
 
     def _process_loan(self):
         """processing loan query"""
+        if self._this_command_type != self.TYPE_LOAN: return
+
         _loan_amount = self._this_command[3]
         _no_of_years = self._this_command[4]
         _rate = self._this_command[5]
@@ -31,16 +36,23 @@ class ProcessHandler(Enums):
             loan_amount=_loan_amount,
             rate=_rate,
             period=_no_of_years,
-        )
-        self._this_loan_object.append(_this)
+        ).calculate()
+        self._this_loan_object.append(_this.serialize())
         pass
 
 
     def _process_balance(self):
         """processing balance query"""
+        if self._this_command_type != self.TYPE_BALANCE: return
         pass
 
 
     def _process_payment(self):
         """processing payment query"""
+        if self._this_command_type != self.TYPE_PAYMENT: return
         pass
+
+
+    def processed_loan_object(self):
+        """return final modified processed loan object having updated values for loan, balance and payment queries"""
+        return self._this_loan_object

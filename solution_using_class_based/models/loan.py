@@ -34,16 +34,19 @@ class Loan(enums.Enums, ISerialize):
         self._customer_id = id.split('_')[1]
         self._uid = utils.Utils(8).get_secret_key()
 
-        self._loan_amount = loan_amount
-        self._rate = rate
-        self._period = period
+        self._loan_amount = float(loan_amount)
+        self._rate = float(rate)
+        self._period = int(period)
+        # self._emi_months = self._period * 12
+        # self._emi_amount = round(self._loan_amount * self._period * self._rate / 100)
 
 
     def calculate(self):
         self._emi_months = self._period * 12
-        self._total_interest = round(self._amount * self._period * self._rate_of_interest / 100)
-        self._total_amount_pi = self._amount + self._total_interest
+        self._total_interest = round(self._loan_amount * self._period * self._rate / 100)
+        self._total_amount_pi = self._loan_amount + self._total_interest
         self._emi_amount = round(self._total_amount_pi / self._emi_months)
+        return self
 
 
     def __str__(self):
