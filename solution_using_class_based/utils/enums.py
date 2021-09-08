@@ -6,6 +6,8 @@ class Enums():
     key_name = 'name'
     key_limit = 'loan_limit'
     key_loan = 'loan_id'
+    key_command = 'command'
+    key_loan_object = 'loan_object'
     key_customer_id = 'customer_id'
     key_customer_name = 'customer_name'
     key_bank_id = 'bank_id'
