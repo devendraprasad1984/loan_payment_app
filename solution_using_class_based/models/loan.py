@@ -77,19 +77,20 @@ class Loan(enums.Enums, ISerialize):
 
 
     def serialize(self):
-        return {
-            self.key_loan: self._loan_id,
-            self.key_customer_id: self._customer_id,
-            self.key_bank_id: self._bank_id,
-            self.key_emi_months: self._emi_months,
-            self.key_emi_months_repaid: self._emi_months_repaid,
-            self.key_loan_amount: self._loan_amount,
-            self.key_emi_amount: self._emi_amount,
-            self.key_period: self._period,
-            self.key_interest: self._total_interest,
-            self.key_repaid_amount: self._repaid_amount,
-            self.key_total_amount_pi: self._total_amount_pi,
-            self.key_when: utils.Utils().get_timestamp(),
-            self.key_active: self._active,
-            self.key_uid: self._uid,
-        }
+        return self.__dict__
+        # return {
+        #     self.key_loan: self._loan_id,
+        #     self.key_customer_id: self._customer_id,
+        #     self.key_bank_id: self._bank_id,
+        #     self.key_emi_months: self._emi_months,
+        #     self.key_emi_months_repaid: self._emi_months_repaid,
+        #     self.key_loan_amount: self._loan_amount,
+        #     self.key_emi_amount: self._emi_amount,
+        #     self.key_period: self._period,
+        #     self.key_interest: self._total_interest,
+        #     self.key_repaid_amount: self._repaid_amount,
+        #     self.key_total_amount_pi: self._total_amount_pi,
+        #     self.key_when: utils.Utils().get_timestamp(),
+        #     self.key_active: self._active,
+        #     self.key_uid: self._uid,
+        # }

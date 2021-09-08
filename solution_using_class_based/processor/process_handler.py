@@ -64,7 +64,7 @@ class ProcessHandler(Enums):
         emi_number = self._this_command[4]
         cur = self._get_loan_object()
         cur = cur.update(lump_sum_payment=lump_sum_amount, emi_months=emi_number)
-        print(self._this_command_type, cur)
+        print(self._this_command_type, cur.serialize())
 
 
     def processed_loan_object(self):
