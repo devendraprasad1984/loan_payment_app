@@ -77,7 +77,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
 ROOT_URLCONF = 'loan_payments.urls'
 
 TEMPLATES = [
@@ -147,12 +147,12 @@ if RUN_ON == 'postgres_local':
     DBNAME = 'geek_trust_loans'
     UNAME = 'dpadmin'
     HOST = 'localhost'
-    PWD = 'admin'
+    PSD = 'admin'
 elif RUN_ON == 'postgres_docker':
     DBNAME = os.environ.get('DB_NAME')
     UNAME = os.environ.get('DB_USER')
     HOST = os.environ.get('DB_HOST')
-    PWD = os.environ.get('DB_PASSWORD')
+    PSD = os.environ.get('DB_PASSWORD')
 
 if RUN_ON in ['postgres_local', 'postgres_docker']:
     DATABASES = {
@@ -160,7 +160,7 @@ if RUN_ON in ['postgres_local', 'postgres_docker']:
             'ENGINE': ENGINE,
             'NAME': DBNAME,
             'USER': UNAME,
-            'PASSWORD': PWD,
+            'PASSWORD': PSD,
             'HOST': HOST,
             'PORT': PORT
         }
