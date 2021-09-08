@@ -1,5 +1,6 @@
 import json
 
+# from django.views.decorators.http import require_http_methods
 from django.http import HttpRequest
 from django.shortcuts import HttpResponse as res
 from django.views.decorators.csrf import csrf_exempt
@@ -14,6 +15,7 @@ from .validations import validate as subscribe_validator
 
 
 # Create your views here.
+@api_view([params.get_])
 def fn_get_new_token(req: HttpRequest):
     if req.method == utils.POST:
         return res(utils.NO_OP_ALLOWED)
@@ -24,6 +26,7 @@ def fn_get_new_token(req: HttpRequest):
     return res(json.dumps(output), content_type=utils.CONTENT_TYPE)
 
 @csrf_exempt
+@api_view([params.post_])
 def fn_check_api_signer(req: HttpRequest):
     if req.method == utils.GET:
         return res(utils.NO_OP_ALLOWED)
