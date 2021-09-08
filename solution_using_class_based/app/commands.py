@@ -36,15 +36,16 @@ class Commands(enums.Enums, checkers.Checker):
 
             self._add_bank_if_missing(name=bank_name)
             self._add_customer_if_missing(name=customer_name)
-            self._LOANS.append(loan.Loan(
+            _thisLoan=loan.Loan(
                 id='1_1',
                 loan_amount=10000,
                 rate=5.0,
                 period=26,
-            ))
+            )
+            self._LOANS.append(_thisLoan)
             # process and handle command LOAN, PAYMENT, BALANCE
             command_handler = CommandHandlerFactory(command_keys[0]).get()
-            command_handler.handle()
+            command_handler.handle(_thisLoan)
 
         self.prepared_objects = {
             'banks': self._BANKS,

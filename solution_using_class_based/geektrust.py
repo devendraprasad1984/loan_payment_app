@@ -1,6 +1,7 @@
 import sys
 
-from solution_using_class_based.utils import commands, utils
+from solution_using_class_based.app import commands
+from solution_using_class_based.utils import utils
 
 
 def print_all(final_object: {}):

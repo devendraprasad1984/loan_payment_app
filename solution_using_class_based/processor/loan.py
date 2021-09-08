@@ -7,5 +7,7 @@ class LoanHandler(enums.Enums):
     def __init__(self):
         pass
 
-    def handle(self):
-        print('handling loan')
+
+    def handle(self, data=None):
+        super().handle(data, self.TYPE_LOAN)
+

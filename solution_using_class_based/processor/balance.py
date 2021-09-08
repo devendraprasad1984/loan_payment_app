@@ -1,7 +1,8 @@
+from solution_using_class_based.handlers.process_handler import ProcessHandler
 from solution_using_class_based.utils import enums
 
 
-class BalanceHandler(enums.Enums):
+class BalanceHandler(enums.Enums, ProcessHandler):
     """handles balance related functions"""
 
 
@@ -9,5 +10,5 @@ class BalanceHandler(enums.Enums):
         pass
 
 
-    def handle(self):
-        print('handling balance')
+    def handle(self, data=None):
+        super().handle(data, self.TYPE_BALANCE)
