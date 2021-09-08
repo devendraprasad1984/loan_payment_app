@@ -20,7 +20,6 @@ def fn_get_new_token(req):
         return res(utils.NO_OP_ALLOWED)
     key = utils.get_secret_access_key()
     sign = utils.get_signer_object()
-    unsign_check = utils.get_unsigner_object(sign)
     output = {"key": key, "signed": sign, field_names.msg: "here is your secret key, keep it safe", field_names.status: utils.success}
     return res(json.dumps(output), content_type=utils.CONTENT_TYPE)
 
