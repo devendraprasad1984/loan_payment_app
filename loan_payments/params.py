@@ -1,6 +1,6 @@
 from drf_yasg import openapi
 
-from loan_payments.common import utils, field_names
+from loan_payments.common import field_names, utils
 
 
 post_ = utils.POST
@@ -8,7 +8,6 @@ get_ = utils.GET
 put_ = 'PUT'
 delete_ = 'DELETE'
 
-# param names to endpoint to be used in swagger
 type_string = openapi.Schema(type=openapi.TYPE_STRING)
 type_integer = openapi.Schema(type=openapi.TYPE_INTEGER)
 type_number = openapi.Schema(type=openapi.TYPE_NUMBER)

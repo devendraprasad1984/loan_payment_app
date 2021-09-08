@@ -1,14 +1,15 @@
 # from functools import wraps
+import sys
 from datetime import datetime
 
-import sys
 
-
-# solution to issue loans to customers from banks, display balances and get payment as monthly emis or bulk payment
-# this solution will work in memory and wont be saved
-# assumptions
-# 1.input will be in correct format
-# 2.only 3 types of processing will be allowed, LOAN, PAYMENT and Balances enquiry
+"""
+    solution to issue loans to customers from banks, display balances and get payment as monthly emis or bulk payment
+    this solution will work in memory and wont be saved
+    assumptions
+    1.input will be in correct format
+    2.only 3 types of processing will be allowed, LOAN, PAYMENT and Balances enquiry
+"""
 
 key_object = 'object'
 key_id = 'id'

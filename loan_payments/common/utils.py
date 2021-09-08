@@ -8,7 +8,7 @@ from django.core.signing import Signer
 from django.utils import crypto
 
 from loan_manager import models
-from ..common import lookup, field_names
+from ..common import field_names, lookup
 from ..middleware import signer_check
 
 
@@ -27,7 +27,7 @@ NO_OP_ALLOWED = json.dumps({field_names.msg: not_allowed, field_names.status: fa
 MISSING_FIELD_MSG = {field_names.msg: "some input values are missing or left blank. ", field_names.status: failed}
 
 
-def getSum(object, field):
+def get_sum(object, field):
     sum = 0
     num_list = [float(x[field]) for x in object.values()]
     for val in num_list:
@@ -35,11 +35,11 @@ def getSum(object, field):
     return float(sum)
 
 
-def getSumFromJsonConverted(object, field):
+def get_sum_from_json_converted(object, field):
     return sum([float(x[field]) if x[field] != None else 0 for x in object])
 
 
-def getList(ds):
+def get_list(ds):
     return list(ds.values())
 
 
@@ -47,17 +47,17 @@ def get_field_values_from_model_object(object, field):
     return getattr(object, field)
 
 
-def getJsonSet(qset):
+def get_json_set(qset):
     data = json.loads(serializers.serialize('json', qset))
     rows = [f['fields'] for f in data]
     return rows
 
 
-def jsonEncode(obj):
+def json_encode(obj):
     return json.loads(json.dumps(obj, cls=DjangoJSONEncoder))
 
 
-def getBodyFromReq(req):
+def get_body_from_req(req):
     return json.loads(req.body.decode('utf-8'))
 
 
@@ -66,18 +66,18 @@ def getuuid():
     return uuid[0: len_of_uid].__str__()
 
 
-def getSecretAccessKey():
+def get_secret_access_key():
     return crypto.get_random_string(len_of_uid)
 
 
-def getSignerObject():
+def get_signer_object():
     signer = Signer()
-    object = {field_names.key: getSecretAccessKey(), field_names.app_code: app_code}
+    object = {field_names.key: get_secret_access_key(), field_names.app_code: app_code}
     signed_object = signer.sign_object(object)
     return signed_object, object
 
 
-def getUnSignerObject(signObj):
+def get_unsigner_object(signObj):
     signer = Signer()
     matched = decoded = False
     key = not_allowed
@@ -96,7 +96,7 @@ def getUnSignerObject(signObj):
     return {field_names.key: key, field_names.matched: matched, field_names.subscription: subscription}
 
 
-def getUnsigned(signkey):
+def get_unsigned(signkey):
     signer = Signer()
     return signer.unsign_object(signkey)
 
@@ -116,7 +116,7 @@ def get_uniq_loanid():
     return uid
 
 
-def addlog(type, logObj):
+def add_log(type, logObj):
     try:
         dblog = models.QUERY_LOG(
             type=type,
@@ -128,8 +128,8 @@ def addlog(type, logObj):
         return str(ex)
 
 
-def adderror(type, trace):
-    addlog(type, {field_names.error: trace})
+def add_error(type, trace):
+    add_log(type, {field_names.error: trace})
 
 
 # returning middleware decorator function with parameter to deal with external api type or having CRUD access to do operations

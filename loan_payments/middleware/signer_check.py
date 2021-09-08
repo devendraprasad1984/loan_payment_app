@@ -3,10 +3,9 @@ from functools import wraps
 
 from django.shortcuts import HttpResponse as res
 
-from loan_payments.common import utils, field_names, lookup
+from loan_payments.common import field_names, lookup, utils
 
 
-# example of closure, decorator or middleware functions
 def check_signer_with_api_type(api_type=None):
     def check_signer(func):
         @wraps(func)
@@ -19,10 +18,10 @@ def check_signer_with_api_type(api_type=None):
             if has_signer_key:
                 signer_key_from_header = req.headers[utils.signer_header_key]
             if has_body:
-                body = utils.getBodyFromReq(req)
+                body = utils.get_body_from_req(req)
                 has_loan_ref = field_names.loan_ref in body
 
-            unsigner = utils.getUnSignerObject(signer_key_from_header)
+            unsigner = utils.get_unsigner_object(signer_key_from_header)
             subscribed = unsigner[field_names.subscription]
             allow_external_from_db = utils.get_field_values_from_model_object(subscribed, field_names.allow_external) if subscribed != None else False
             allow_crud_internal_from_db = utils.get_field_values_from_model_object(subscribed, field_names.allow_crud_internal) if subscribed != None else False

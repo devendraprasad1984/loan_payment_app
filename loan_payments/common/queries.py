@@ -1,9 +1,9 @@
 from django.db import connection
 
-from . import utils, field_names
+from . import field_names, utils
 
 
-def getCustomerWithLoanQuery(**param):
+def get_customer_with_loan_query(**param):
     id = param[field_names.id] if field_names.id in param else ''
     loan_ref = param[field_names.loan_ref] if field_names.loan_ref in param else ''
 
@@ -19,7 +19,7 @@ def getCustomerWithLoanQuery(**param):
 
     return qur
 
-def CUSTOM_QUERY_RUN(qur):
+def custom_query_run(qur):
     cursor = connection.cursor()
     getfield = lambda i: cursor.description[i][0]
     cursor.execute(qur)
@@ -27,4 +27,4 @@ def CUSTOM_QUERY_RUN(qur):
     jsondata = [dict((getfield(i), value) for i, value in enumerate(row)) for row in rows]
     cursor = None
     # cursor.connection.close()
-    return {"rows": rows, "json": utils.jsonEncode(jsondata)}
+    return {"rows": rows, "json": utils.json_encode(jsondata)}

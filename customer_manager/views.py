@@ -12,7 +12,6 @@ from loan_payments.common import field_names, lookup, utils
 from .validations import validate as customerValidations
 
 
-# Create your views here.
 @require_POST
 @csrf_exempt
 @swagger_auto_schema(methods=[params.post_], request_body=params.add_customer_req_body, manual_parameters=[params.param_signer_ref], operation_description=params.add_customer_desc)
@@ -22,7 +21,7 @@ def fn_add_customer(req):
     if req.method == 'GET':
         return res(utils.NO_OP_ALLOWED)
 
-    body = utils.getBodyFromReq(req)
+    body = utils.get_body_from_req(req)
     check_flag, msg = lookup.check_field_existence_in_request_body(body, [field_names.name, field_names.age, field_names.email, field_names.loan_limit])
     if check_flag == False: return res(msg, content_type=utils.CONTENT_TYPE)
 
@@ -43,7 +42,7 @@ def fn_add_customer(req):
                 loan_limit=loan_limit
             )
             model.save()
-            utils.addlog(field_names.customer, body)
+            utils.add_log(field_names.customer, body)
             success = {
                 field_names.msg: f'customer {name}, {email}, {age} yrs, having loan {loan_limit} added - {uid}',
                 field_names.status: utils.success
@@ -55,7 +54,7 @@ def fn_add_customer(req):
                 field_names.status: utils.failed
             }
             flag = False
-            utils.adderror('customer error', str(ex))
+            utils.add_error('customer error', str(ex))
     else:
         flag = False
         failed = {
@@ -75,7 +74,7 @@ def fn_get_list_of_customers(req, id=None):
     if req.method == utils.POST:
         return res(utils.NO_OP_ALLOWED)
     output = lookup.run_customer_loan_query(**{"id": id})
-    utils.addlog(field_names.customer, {'customer_fetch': True})
+    utils.add_log(field_names.customer, {'customer_fetch': True})
     return res(json.dumps(output), content_type=utils.CONTENT_TYPE)
 
 @require_POST
@@ -87,5 +86,5 @@ def fn_get_customer_loan(req, loan_ref=None):
     if req.method == utils.POST:
         return res(utils.NO_OP_ALLOWED)
     output = lookup.run_customer_loan_query(**{field_names.loan_ref: loan_ref})
-    utils.addlog(field_names.customer_with_loan, {'customer_fetch_loan_ref': True})
+    utils.add_log(field_names.customer_with_loan, {'customer_fetch_loan_ref': True})
     return res(json.dumps(output), content_type=utils.CONTENT_TYPE)

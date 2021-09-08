@@ -45,9 +45,9 @@ def check_customer_all_loan(customer_id):
     flag = True
     try:
         found = loan_model.LOANS.objects.filter(customerid=customer_id)
-        total_loan_amount = utils.getSum(found, field_names.loan_amount)
-        total_repaid_amount = utils.getSum(found, field_names.repaid_amount)
-        total_interest_amount = utils.getSum(found, field_names.interest_amount)
+        total_loan_amount = utils.get_sum(found, field_names.loan_amount)
+        total_repaid_amount = utils.get_sum(found, field_names.repaid_amount)
+        total_interest_amount = utils.get_sum(found, field_names.interest_amount)
     except loan_model.LOANS.DoesNotExist:
         found = None
         if found != None and found.id != None:
@@ -118,16 +118,16 @@ def get_existing_loan_details(bankid=None, customerid=None, loan_ref=None):
     try:
         if loan_ref != None and bankid == None and customerid == None:
             found = loan_model.LOANS.objects.filter(uid=loan_ref)
-            found_list = utils.getList(found)[0]
+            found_list = utils.get_list(found)[0]
             id = found_list[field_names.id]
         elif loan_ref != None and bankid != None and customerid != None:
             found = loan_model.LOANS.objects.filter(bankid=bankid, customerid=customerid, uid=loan_ref)
-            found_list = utils.getList(found)[0]
+            found_list = utils.get_list(found)[0]
             id = found_list[field_names.id]
             uid = found_list[field_names.uid]
         elif bankid == None and customerid == None:
             found = loan_model.LOANS.objects.filter(bankid=bankid, customerid=customerid)
-            found_list = utils.getJsonSet(found)
+            found_list = utils.get_json_set(found)
     except loan_model.LOANS.DoesNotExist:
         found = None
         if found != None and found.id != None:
@@ -136,9 +136,9 @@ def get_existing_loan_details(bankid=None, customerid=None, loan_ref=None):
 
 
 def run_customer_loan_query(**param):
-    dataset = queries.CUSTOM_QUERY_RUN(queries.getCustomerWithLoanQuery(**param))
+    dataset = queries.custom_query_run(queries.get_customer_with_loan_query(**param))
     json_data = dataset[field_names.json]
-    total_loan_offered = utils.getSumFromJsonConverted(json_data, field_names.loan_amount)
+    total_loan_offered = utils.get_sum_from_json_converted(json_data, field_names.loan_amount)
     loan_limit_left = -1
     is_id_ref = param[field_names.id] if field_names.id in param else ''
     is_loan_ref = param[field_names.loan_ref] if field_names.loan_ref in param else ''

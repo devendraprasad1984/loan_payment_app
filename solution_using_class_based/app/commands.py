@@ -16,7 +16,6 @@ class Commands(enums.Enums, checkers.Checker):
 
 
     def _add_bank_if_missing(self, name):
-        # hold bank details
         found, id = self.check_present_of_same_name_object(self._BANKS, name)
         if id == -1:
             id = self._BANKS.__len__() + 1

@@ -26,7 +26,7 @@ msg_entity_doesnt_exist = {
 def fn_loan(req):
     if req.method == utils.GET:
         return res(utils.NO_OP_ALLOWED)
-    body = utils.getBodyFromReq(req)
+    body = utils.get_body_from_req(req)
     check_flag, msg = lookup.check_field_existence_in_request_body(body, [field_names.bank_name, field_names.email, field_names.loan_amount,
                                                                           field_names.rate, field_names.year])
     if check_flag == False: return res(msg, content_type=utils.CONTENT_TYPE)
@@ -81,7 +81,7 @@ def fn_loan(req):
             total_amount_pi=total_amount_pi
         )
         model.save()
-        utils.addlog(f'loan added for customer {customerid} - {customername} from bank {bankid} - {bank_name}', body)
+        utils.add_log(f'loan added for customer {customerid} - {customername} from bank {bankid} - {bank_name}', body)
         success = {
             field_names.msg: f'CREDIT LOAN LEFT LIMIT {credit_loan_left}. This customer already has {total_number_of_loans} running worth {total_loaned_value}. '
                              f'loan for Mr/Mrs {customername}(customer id: {customerid}, email: {email}) from bank {bank_name}({bankid}) has been granted. '
@@ -93,7 +93,7 @@ def fn_loan(req):
         }
         status_flag = True
     except Exception as ex:
-        utils.adderror('loan error', str(ex))
+        utils.add_error('loan error', str(ex))
         failed = {
             field_names.msg: f'loan for {bank_name} could not be added',
             field_names.detail: str(ex),
@@ -114,7 +114,7 @@ def fn_payment(req):
     if req.method == utils.GET:
         return res(utils.NO_OP_ALLOWED)
 
-    body = utils.getBodyFromReq(req)
+    body = utils.get_body_from_req(req)
     check_flag, msg = lookup.check_field_existence_in_request_body(body, [field_names.payment, field_names.loan_ref, field_names.emi_number])
     if check_flag == False: return res(msg, content_type=utils.CONTENT_TYPE)
 
@@ -168,14 +168,14 @@ def fn_payment(req):
             interest_amount=interest_amount,
         )
         status_flag = True
-        utils.addlog(f'payment (cust: {customerid}) / (bank: {bankid}) / loan: {loan_ref}', body)
+        utils.add_log(f'payment (cust: {customerid}) / (bank: {bankid}) / loan: {loan_ref}', body)
         msg = {
             field_names.msg: f'PAYMENT= loan: {loan_ref}({loan_id})'
                              f'loan amount: {loan_amount}, emi amount: {emi_amount}, payment: {payment}, emi months: {emi_months}, emi repaid: {repaid_amount}, emi_months_repaid:{emi_months_repaid}, remaining interest: {interest_amount}',
             field_names.status: status_flag
         }
     except Exception as ex:
-        utils.adderror('loan error', str(ex))
+        utils.add_error('loan error', str(ex))
         msg = {
             field_names.msg: f'payment for {loan_ref}, customer: {customerid} could not be processed',
             field_names.detail: str(ex),
@@ -194,7 +194,7 @@ def fn_balance(req):
     if req.method == utils.GET:
         return res(utils.NO_OP_ALLOWED)
 
-    body = utils.getBodyFromReq(req)
+    body = utils.get_body_from_req(req)
     check_flag, msg = lookup.check_field_existence_in_request_body(body, [field_names.bank_name, field_names.email, field_names.loan_ref,
                                                                           field_names.emi_number])
     if check_flag == False: return res(msg, content_type=utils.CONTENT_TYPE)
@@ -229,8 +229,8 @@ def fn_balance(req):
     msg = {
         field_names.msg: f'Balances= {bank_name}({bankid}) - customer: {customer_name}, email: {email}, emi: {emi_number}, loan: {loan_uid}({loan_id})'
                          f'loan amount: {loan_amount}, emi amount: {emi_amount}, emi months: {emi_months}, emi repaid: {repaid_amount}, emi_months_repaid:{emi_months_repaid}',
-        field_names.loan_details: utils.jsonEncode(loan_object),
+        field_names.loan_details: utils.json_encode(loan_object),
         field_names.status: True
     }
-    utils.addlog(f'balance check {customer_name}({customerid}) / {bank_name}({bankid})', body)
+    utils.add_log(f'balance check {customer_name}({customerid}) / {bank_name}({bankid})', body)
     return res(json.dumps(msg), content_type=utils.CONTENT_TYPE)

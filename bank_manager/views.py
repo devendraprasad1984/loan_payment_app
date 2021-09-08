@@ -12,7 +12,6 @@ from loan_payments.common import field_names, lookup, utils
 from .validations import validate as bankValidations
 
 
-# Create your views here.
 @require_POST
 @csrf_exempt
 @swagger_auto_schema(methods=[params.post_], request_body=params.add_bank_req_body, manual_parameters=[params.param_signer_ref], operation_description=params.add_bank_desc)
@@ -21,7 +20,7 @@ from .validations import validate as bankValidations
 def fn_add_bank(req):
     if req.method == utils.GET:
         return res(utils.NO_OP_ALLOWED)
-    body = utils.getBodyFromReq(req)
+    body = utils.get_body_from_req(req)
     check_flag, msg = lookup.check_field_existence_in_request_body(body, [field_names.name])
     if check_flag == False: return res(msg, content_type=utils.CONTENT_TYPE)
 
@@ -33,7 +32,7 @@ def fn_add_bank(req):
             uid = utils.get_uniq_bankid()
             model = models.BANKS(name=name, uid=uid)
             model.save()
-            utils.addlog(field_names.banks, body)
+            utils.add_log(field_names.banks, body)
             success = {
                 field_names.msg: f'bank {name} added - {uid}',
                 field_names.status: utils.success
@@ -45,7 +44,7 @@ def fn_add_bank(req):
                 field_names.status: utils.failed
             }
             flag = False
-            utils.adderror('bank error', str(ex))
+            utils.add_error('bank error', str(ex))
     else:
         flag = False
         failed = {
@@ -64,7 +63,7 @@ def fn_add_bank(req):
 def fn_get_list_of_banks(req):
     if req.method == utils.POST:
         return res(utils.NO_OP_ALLOWED)
-    data = utils.getJsonSet(models.BANKS.objects.only(field_names.id, field_names.name, field_names.uid, field_names.when).order_by(field_names.id))
+    data = utils.get_json_set(models.BANKS.objects.only(field_names.id, field_names.name, field_names.uid, field_names.when).order_by(field_names.id))
     output = {'data': data}
-    utils.addlog(field_names.banks, {'bank_fetch': True})
+    utils.add_log(field_names.banks, {'bank_fetch': True})
     return res(json.dumps(output), content_type=utils.CONTENT_TYPE)

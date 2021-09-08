@@ -1,6 +1,5 @@
 import json
 
-# from django.views.decorators.http import require_http_methods
 from django.shortcuts import HttpResponse as res
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
@@ -14,17 +13,17 @@ from . import models
 from .validations import validate as subscribe_validator
 
 
-# Create your views here.
 @require_GET
 @api_view([params.get_])
 def fn_get_new_token(req):
     if req.method == utils.POST:
         return res(utils.NO_OP_ALLOWED)
-    key = utils.getSecretAccessKey()
-    sign = utils.getSignerObject()
-    unsign_check = utils.getUnSignerObject(sign)
+    key = utils.get_secret_access_key()
+    sign = utils.get_signer_object()
+    unsign_check = utils.get_unsigner_object(sign)
     output = {"key": key, "signed": sign, field_names.msg: "here is your secret key, keep it safe", field_names.status: utils.success}
     return res(json.dumps(output), content_type=utils.CONTENT_TYPE)
+
 
 @require_POST
 @csrf_exempt
@@ -32,17 +31,17 @@ def fn_get_new_token(req):
 def fn_check_api_signer(req):
     if req.method == utils.GET:
         return res(utils.NO_OP_ALLOWED)
-    body = utils.getBodyFromReq(req)
+    body = utils.get_body_from_req(req)
     check_flag, msg = lookup.check_field_existence_in_request_body(body, [field_names.signer])
     if check_flag == False: return res(msg, content_type=utils.CONTENT_TYPE)
 
     sign = body[field_names.signer]
-    unsign_check = utils.getUnSignerObject(sign)
-    # sign = unsign_check['unsigner']
+    unsign_check = utils.get_unsigner_object(sign)
     matched = unsign_check[field_names.matched]
     key = unsign_check[field_names.key]
     output = {"matched": matched, field_names.msg: "access granted", field_names.status: utils.success}
     return res(json.dumps(output), content_type=utils.CONTENT_TYPE)
+
 
 @require_POST
 @csrf_exempt
@@ -51,17 +50,15 @@ def fn_check_api_signer(req):
 def fn_subscribe(req):
     if req.method == utils.GET:
         return res(utils.NO_OP_ALLOWED)
-    body = utils.getBodyFromReq(req)
+    body = utils.get_body_from_req(req)
     check_flag, msg = lookup.check_field_existence_in_request_body(body, [field_names.name, field_names.email, field_names.type])
     if check_flag == False: return res(msg, content_type=utils.CONTENT_TYPE)
 
     name = body[field_names.name]
     email = body[field_names.email]
-    # allow_external_access = body[field_names.allow_external_access]
-    # allow_crud_internal = body[field_names.allow_crud_internal]
     type = body[field_names.type]
 
-    sign, base_object = utils.getSignerObject()
+    sign, base_object = utils.get_signer_object()
     key = base_object[field_names.key]
 
     flag = True
@@ -76,12 +73,12 @@ def fn_subscribe(req):
                 type=type
             )
             model.save()
-            utils.addlog(field_names.new_subscription, body)
+            utils.add_log(field_names.new_subscription, body)
             success = {
                 field_names.msg: {"key": key, "signed": sign,
                                   field_names.msg: f'Thanks {name}! for subscribing our apis and saas solutions. you secret key has been mailed to you'
-                               f' at {email}. use it in header {utils.signer_header_key} for accessing our services. this will be valid for next 1 year. '
-                               f'You have to get it regnerated for further use', field_names.status: utils.success},
+                                                   f' at {email}. use it in header {utils.signer_header_key} for accessing our services. this will be valid for next 1 year. '
+                                                   f'You have to get it regnerated for further use', field_names.status: utils.success},
                 field_names.status: utils.success
             }
         except Exception as ex:
@@ -91,7 +88,7 @@ def fn_subscribe(req):
                 field_names.status: utils.failed
             }
             flag = False
-            utils.adderror(field_names.subscription_error, str(ex))
+            utils.add_error(field_names.subscription_error, str(ex))
     else:
         flag = False
         failed = {
@@ -102,16 +99,20 @@ def fn_subscribe(req):
     output = success if flag == True else failed
     return res(json.dumps(output), content_type=utils.CONTENT_TYPE)
 
+
 @require_GET
 @swagger_auto_schema(methods=[params.get_], operation_description=params.subscription_list_desc)
 @api_view([params.get_])
 def fn_get_subscribers(req):
     if req.method == utils.POST:
         return res(utils.NO_OP_ALLOWED)
-    data = utils.getJsonSet(models.SUBSCRIPTION.objects.only(field_names.id, field_names.name, field_names.email, field_names.secret_key, field_names.signer, field_names.when).order_by(field_names.id))
+    data = utils.get_json_set(
+        models.SUBSCRIPTION.objects.only(field_names.id, field_names.name, field_names.email, field_names.secret_key, field_names.signer,
+                                         field_names.when).order_by(field_names.id))
     output = {'data': data}
-    utils.addlog(field_names.subscription, {'subscription list fetch': True})
+    utils.add_log(field_names.subscription, {'subscription list fetch': True})
     return res(json.dumps(output), content_type=utils.CONTENT_TYPE)
+
 
 @require_POST
 @csrf_exempt
@@ -120,8 +121,7 @@ def fn_get_subscribers(req):
 def fn_jwt_token_pair(req):
     if req.method == utils.GET:
         return res(utils.NO_OP_ALLOWED)
-    # pairs=jwtSerialiser.TokenObtainSerializer(jwt_views.TokenObtainPairView.as_view())
-    body = utils.getBodyFromReq(req)
+    body = utils.get_body_from_req(req)
     check_flag, msg = lookup.check_field_existence_in_request_body(body, [field_names.user])
     if check_flag == False: return res(msg, content_type=utils.CONTENT_TYPE)
 
