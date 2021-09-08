@@ -54,7 +54,7 @@ class ProcessHandler(Enums):
         if self._this_command_type != self.TYPE_BALANCE: return
         emi_number = self._this_command[3]
         cur = self._get_loan_object()
-        print(self._this_command_type, cur)
+        # print(self._this_command_type, cur)
 
 
     def _process_payment(self):
@@ -63,7 +63,7 @@ class ProcessHandler(Enums):
         lump_sum_amount = self._this_command[3]
         emi_number = self._this_command[4]
         cur = self._get_loan_object()
-        cur.update(lump_sum_payment=lump_sum_amount, emi_months=emi_number)
+        cur = cur.update(lump_sum_payment=lump_sum_amount, emi_months=emi_number)
         print(self._this_command_type, cur)
 
 

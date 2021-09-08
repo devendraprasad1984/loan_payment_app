@@ -18,6 +18,7 @@ class Loan(enums.Enums, ISerialize):
     _interest = 0
     _repaid_amount = 0
     _total_amount_pi = 0
+    _loan_amount_left = 0
     _active = True
     _no_of_years = 0
     _total_interest = None
@@ -45,7 +46,7 @@ class Loan(enums.Enums, ISerialize):
         """calculate few parameters based on input given for loan processing"""
         self._emi_months = self._period * 12
         self._total_interest = round(self._loan_amount * self._period * self._rate / 100)
-        self._total_amount_pi = self._loan_amount + self._total_interest
+        self._total_amount_pi = float(self._loan_amount + self._total_interest)
         self._emi_amount = round(self._total_amount_pi / self._emi_months)
         return self
 
@@ -54,7 +55,8 @@ class Loan(enums.Enums, ISerialize):
         """update loan object with lumpsum payment from emi_months"""
         self._emi_months_repaid += int(emi_months)
         self._emi_months -= int(emi_months)
-        self._total_amount_pi -= float(lump_sum_payment)
+        self._repaid_amount = self._repaid_amount + float(lump_sum_payment)
+        self._loan_amount_left = self._total_amount_pi - float(lump_sum_payment)
         return self
 
 
