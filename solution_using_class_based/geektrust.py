@@ -18,7 +18,7 @@ def main():
 
     command = commands.Commands(input_ledger_commands)
     final_object = command.process_ledger_commands()
-    util.print_all_serialize(final_object['ledgers'])
+    # util.print_all_serialize(final_object['ledgers'])
     util.print_lists(final_object['output'])
 
 
