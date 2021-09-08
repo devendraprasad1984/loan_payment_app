@@ -1,6 +1,6 @@
-from solution_using_class_based.factory.command_handler import CommandHandlerFactory
-from solution_using_class_based.models import bank, customer
-from solution_using_class_based.utils import checkers, enums
+from .factory.command_handler import CommandHandlerFactory
+from .models import bank, customer
+from .utils import checkers, enums
 
 
 class Commands(enums.Enums, checkers.Checker):

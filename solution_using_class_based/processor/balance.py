@@ -1,4 +1,4 @@
-from solution_using_class_based.processor.process_handler import ProcessHandler
+from .processor.process_handler import ProcessHandler
 
 
 class BalanceHandler(ProcessHandler):

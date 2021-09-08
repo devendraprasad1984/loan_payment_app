@@ -1,6 +1,6 @@
 # from abc import ABC, abstractmethod
-from solution_using_class_based.models.loan import Loan
-from solution_using_class_based.utils.enums import Enums
+from .models.loan import Loan
+from .utils.enums import Enums
 
 
 class ProcessHandler(Enums):

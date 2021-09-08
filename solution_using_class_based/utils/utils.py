@@ -1,7 +1,7 @@
 import secrets
 from datetime import datetime
 
-from solution_using_class_based.utils import enums
+from .utils import enums
 
 
 class Utils(enums.Enums):

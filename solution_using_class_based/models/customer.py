@@ -1,5 +1,5 @@
-from solution_using_class_based.serializers.iSerialize import ISerialize
-from solution_using_class_based.utils import enums, utils
+from .serializers.iSerialize import ISerialize
+from .utils import enums, utils
 
 
 class Customer(enums.Enums, ISerialize):

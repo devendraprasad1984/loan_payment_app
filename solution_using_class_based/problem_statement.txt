@@ -87,3 +87,16 @@ IDIDI Dale 1326 4
 IDIDI Dale 2652 1
 UON Shelly 8856 0
 MBI Harry 4032 14
+
+
+
+
+solve module error:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/usr/local/lib/python3.7/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/codesubmissions/geektrust.py", line 3, in <module>
+    from solution_using_class_based.app import commands
+ModuleNotFoundError: No module named 'solution_using_class_based'
