@@ -53,8 +53,9 @@ class Loan(enums.Enums, ISerialize):
 
     def update(self, lump_sum_payment=0, emi_months=0):
         """update loan object with lumpsum payment from emi_months"""
+        emi_months_by_payment = round(float(lump_sum_payment) / float(self._emi_amount))
         self._emi_months_repaid += int(emi_months)
-        self._emi_months -= int(emi_months)
+        self._emi_months = self._emi_months - int(emi_months) - emi_months_by_payment
         self._repaid_amount = self._repaid_amount + float(lump_sum_payment)
         self._loan_amount_left = self._total_amount_pi - float(lump_sum_payment)
         return self
