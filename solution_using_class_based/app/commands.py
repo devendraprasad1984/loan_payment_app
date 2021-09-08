@@ -1,5 +1,5 @@
 from solution_using_class_based.factory.command_handler import CommandHandlerFactory
-from solution_using_class_based.models import bank, customer, loan
+from solution_using_class_based.models import bank, customer
 from solution_using_class_based.utils import checkers, enums
 
 
@@ -15,16 +15,23 @@ class Commands(enums.Enums, checkers.Checker):
     def __init__(self, commands=None):
         self.commands = commands
 
+
     def _add_bank_if_missing(self, name):
         # hold bank details
-        if self.check_present_of_same_name_object(self._BANKS, name) == False:
-            self._BANKS.append(bank.Bank(id=self._BANKS.__len__() + 1, name=name))
+        found, id = self.check_present_of_same_name_object(self._BANKS, name)
+        if id == -1:
+            id = self._BANKS.__len__() + 1
+            self._BANKS.append(bank.Bank(id=id, name=name))
+        return id
 
 
     def _add_customer_if_missing(self, name):
         # hold customer details
-        if self.check_present_of_same_name_object(self._CUSTOMERS, name) == False:
-            self._CUSTOMERS.append(customer.Customer(id=self._CUSTOMERS.__len__() + 1, name=name))
+        found, id = self.check_present_of_same_name_object(self._CUSTOMERS, name)
+        if id == -1:
+            id = self._CUSTOMERS.__len__() + 1
+            self._CUSTOMERS.append(customer.Customer(id=id, name=name))
+        return id
 
 
     def process_ledger_commands(self):
@@ -34,18 +41,18 @@ class Commands(enums.Enums, checkers.Checker):
             bank_name = command_keys[1]
             customer_name = command_keys[2]
 
-            self._add_bank_if_missing(name=bank_name)
-            self._add_customer_if_missing(name=customer_name)
-            _thisLoan=loan.Loan(
-                id='1_1',
-                loan_amount=10000,
-                rate=5.0,
-                period=26,
-            )
-            self._LOANS.append(_thisLoan)
+            bank_id = self._add_bank_if_missing(name=bank_name)
+            customer_id = self._add_customer_if_missing(name=customer_name)
+            # _thisLoan = loan.Loan(
+            #     id=f'{bank_id}_{customer_id}',
+            #     loan_amount=10000,
+            #     rate=5.0,
+            #     period=26,
+            # )
+            # self._LOANS.append(_thisLoan)
             # process and handle command LOAN, PAYMENT, BALANCE
             command_handler = CommandHandlerFactory(command_keys[0]).get()
-            command_handler.handle(_thisLoan)
+            command_handler.handle(command=command_keys)
 
         self.prepared_objects = {
             'banks': self._BANKS,

@@ -10,5 +10,5 @@ class BalanceHandler(enums.Enums, ProcessHandler):
         pass
 
 
-    def handle(self, data=None):
-        super().handle(data, self.TYPE_BALANCE)
+    def handle(self, **kwargs):
+        super().handle(self.TYPE_BALANCE, kwargs)
