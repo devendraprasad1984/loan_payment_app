@@ -4,14 +4,13 @@ from solution_using_class_based.app import commands
 from solution_using_class_based.utils import utils
 
 
-def print_all(final_object: {}):
-    """print all objects, BANKS, CUSTOMERS, LOANS"""
-    if final_object.__len__() == 0: return
+def print_all(listOfObjects: []):
+    """print objects via their serialize call"""
+    if listOfObjects.__len__() == 0: return
     util = utils.Utils()
-    for obj in final_object.values():
-        for _ in obj:
-            msg = {"message": _.__str__(), "data": _.serialize()}
-            util.print_log(**msg)
+    for obj in listOfObjects:
+        msg = {"message": obj.__str__(), "data": obj.serialize()}
+        util.print_log(**msg)
 
 
 def main():
@@ -24,7 +23,11 @@ def main():
 
     command = commands.Commands(input_ledger_commands)
     final_object = command.process_ledger_commands()
-    # print_all(final_object=final_object)
+    print_all(final_object['ledgers'])
+    # print_all(final_object['banks'])
+    # print_all(final_object['customers'])
+    # print_all(final_object['output'])
+
 
 
 if __name__ == "__main__":

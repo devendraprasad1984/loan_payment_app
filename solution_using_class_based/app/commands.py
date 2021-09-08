@@ -51,7 +51,7 @@ class Commands(enums.Enums, checkers.Checker):
                 self.key_loan_object: self._LOANS
             }
             command_handler.handle(**params)
-            print(command_handler.processed_loan_object())
+            self._LOANS = command_handler.processed_loan_object()
 
         return {
             'banks': self._BANKS,

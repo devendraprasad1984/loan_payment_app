@@ -37,7 +37,7 @@ class ProcessHandler(Enums):
             rate=_rate,
             period=_no_of_years,
         ).calculate()
-        self._this_loan_object.append(_this.serialize())
+        self._this_loan_object.append(_this)
         pass
 
 
