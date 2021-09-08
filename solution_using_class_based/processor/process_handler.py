@@ -7,12 +7,14 @@ class ProcessHandler(Enums):
     _this_loan_object = None
     _this_command = None
     _this_loan_id = None
+    _this_command_type = None
 
 
     def handle(self, type=None, **kwargs):
         """handle derived classes handler logic"""
+        self._this_command_type = type
         self._this_loan_object = kwargs[self.key_loan_object]
         self._this_command = kwargs[self.key_command]
         self._this_loan_id = kwargs[self.key_loan]
 
-        print(f'from child {type} - {kwargs}')
+        print(f'from child {self._this_command_type} - {self._this_loan_id} - {self._this_command} - {self._this_loan_object}')
