@@ -1,7 +1,6 @@
 import json
 
 # from django.views.decorators.http import require_http_methods
-from django.http import HttpRequest
 from django.shortcuts import HttpResponse as res
 from django.views.decorators.csrf import csrf_exempt
 from drf_yasg.utils import swagger_auto_schema
@@ -16,7 +15,7 @@ from .validations import validate as subscribe_validator
 
 # Create your views here.
 @api_view([params.get_])
-def fn_get_new_token(req: HttpRequest):
+def fn_get_new_token(req):
     if req.method == utils.POST:
         return res(utils.NO_OP_ALLOWED)
     key = utils.getSecretAccessKey()
@@ -27,7 +26,7 @@ def fn_get_new_token(req: HttpRequest):
 
 @csrf_exempt
 @api_view([params.post_])
-def fn_check_api_signer(req: HttpRequest):
+def fn_check_api_signer(req):
     if req.method == utils.GET:
         return res(utils.NO_OP_ALLOWED)
     body = utils.getBodyFromReq(req)
@@ -45,7 +44,7 @@ def fn_check_api_signer(req: HttpRequest):
 @csrf_exempt
 @swagger_auto_schema(methods=[params.post_], request_body=params.subscription_req_body, operation_description=params.subscription_req_desc)
 @api_view([params.post_])
-def fn_subscribe(req: HttpRequest):
+def fn_subscribe(req):
     if req.method == utils.GET:
         return res(utils.NO_OP_ALLOWED)
     body = utils.getBodyFromReq(req)
@@ -101,7 +100,7 @@ def fn_subscribe(req: HttpRequest):
 
 @swagger_auto_schema(methods=[params.get_], operation_description=params.subscription_list_desc)
 @api_view([params.get_])
-def fn_get_subscribers(req: HttpRequest):
+def fn_get_subscribers(req):
     if req.method == utils.POST:
         return res(utils.NO_OP_ALLOWED)
     data = utils.getJsonSet(models.SUBSCRIPTION.objects.only(field_names.id, field_names.name, field_names.email, field_names.secret_key, field_names.signer, field_names.when).order_by(field_names.id))

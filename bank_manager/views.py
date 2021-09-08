@@ -1,6 +1,5 @@
 import json
 
-from django.http import HttpRequest
 from django.shortcuts import HttpResponse as res
 from django.views.decorators.csrf import csrf_exempt
 from drf_yasg.utils import swagger_auto_schema
@@ -17,7 +16,7 @@ from .validations import validate as bankValidations
 @swagger_auto_schema(methods=[params.post_], request_body=params.add_bank_req_body, manual_parameters=[params.param_signer_ref], operation_description=params.add_bank_desc)
 @api_view([params.post_])
 @utils.manager_check_signer_middleware()
-def fn_add_bank(req: HttpRequest):
+def fn_add_bank(req):
     if req.method == utils.GET:
         return res(utils.NO_OP_ALLOWED)
     body = utils.getBodyFromReq(req)
