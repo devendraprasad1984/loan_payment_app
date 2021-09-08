@@ -2,5 +2,5 @@ projectKey=loan_dummy_app
 serverUrl=http://localhost:9000
 serverVersion=8.9.2.46101
 dashboardUrl=http://localhost:9000/dashboard?id=loan_dummy_app
-ceTaskId=AXvFplCwS-pDWRr8Paz3
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AXvFplCwS-pDWRr8Paz3
+ceTaskId=AXvFqcqLS-pDWRr8Paz4
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AXvFqcqLS-pDWRr8Paz4

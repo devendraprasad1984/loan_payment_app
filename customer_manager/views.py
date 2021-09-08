@@ -2,6 +2,7 @@ import json
 
 from django.shortcuts import HttpResponse as res
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_GET, require_POST
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view
 
@@ -12,6 +13,7 @@ from .validations import validate as customerValidations
 
 
 # Create your views here.
+@require_POST
 @csrf_exempt
 @swagger_auto_schema(methods=[params.post_], request_body=params.add_customer_req_body, manual_parameters=[params.param_signer_ref], operation_description=params.add_customer_desc)
 @api_view([params.post_])
@@ -64,6 +66,7 @@ def fn_add_customer(req):
     output = success if flag == True else failed
     return res(json.dumps(output), content_type=utils.CONTENT_TYPE)
 
+@require_GET
 @csrf_exempt
 @swagger_auto_schema(methods=[params.get_], manual_parameters=[params.param_signer_ref], operation_description=params.get_customer_by_id_desc)
 @api_view([params.get_])
@@ -75,6 +78,7 @@ def fn_get_list_of_customers(req, id=None):
     utils.addlog(field_names.customer, {'customer_fetch': True})
     return res(json.dumps(output), content_type=utils.CONTENT_TYPE)
 
+@require_POST
 @csrf_exempt
 @swagger_auto_schema(methods=[params.get_], manual_parameters=[params.param_signer_ref], operation_description=params.get_customer_by_loan_ref_desc)
 @api_view([params.get_])

@@ -3,6 +3,7 @@ import json
 # from django.views.decorators.http import require_http_methods
 from django.shortcuts import HttpResponse as res
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_GET, require_POST
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt import tokens as jwtsimple
@@ -14,6 +15,7 @@ from .validations import validate as subscribe_validator
 
 
 # Create your views here.
+@require_GET
 @api_view([params.get_])
 def fn_get_new_token(req):
     if req.method == utils.POST:
@@ -24,6 +26,7 @@ def fn_get_new_token(req):
     output = {"key": key, "signed": sign, field_names.msg: "here is your secret key, keep it safe", field_names.status: utils.success}
     return res(json.dumps(output), content_type=utils.CONTENT_TYPE)
 
+@require_POST
 @csrf_exempt
 @api_view([params.post_])
 def fn_check_api_signer(req):
@@ -41,6 +44,7 @@ def fn_check_api_signer(req):
     output = {"matched": matched, field_names.msg: "access granted", field_names.status: utils.success}
     return res(json.dumps(output), content_type=utils.CONTENT_TYPE)
 
+@require_POST
 @csrf_exempt
 @swagger_auto_schema(methods=[params.post_], request_body=params.subscription_req_body, operation_description=params.subscription_req_desc)
 @api_view([params.post_])
@@ -98,6 +102,7 @@ def fn_subscribe(req):
     output = success if flag == True else failed
     return res(json.dumps(output), content_type=utils.CONTENT_TYPE)
 
+@require_GET
 @swagger_auto_schema(methods=[params.get_], operation_description=params.subscription_list_desc)
 @api_view([params.get_])
 def fn_get_subscribers(req):
@@ -108,27 +113,7 @@ def fn_get_subscribers(req):
     utils.addlog(field_names.subscription, {'subscription list fetch': True})
     return res(json.dumps(output), content_type=utils.CONTENT_TYPE)
 
-# @csrf_exempt
-# def fn_ADD_API_USER(req):
-#     if req.method == utils.GET:
-#         return res(utils.NO_OP_ALLOWED)
-#     body = utils.getBodyFromReq(req)
-#     check_flag, msg = lookup.check_field_existence_in_request_body(body, [field_names.username, field_names.email, field_names.pwd])
-#     if check_flag == False: return res(msg, content_type=utils.CONTENT_TYPE)
-#
-#     user = body[field_names.username]
-#     email = body[field_names.email]
-#     pwd = body[field_names.pwd]
-#     trace = ''
-#     try:
-#         user = User.objects.create_user(user, email, pwd)
-#         user.save()
-#         flag = True
-#     except Exception as ex:
-#         flag = False
-#         trace = str(ex)
-#     return res(json.dumps({'status': utils.success if flag else utils.failed, field_names.msg: f"user {user} {'added' if flag else 'not added'}", "trace": trace}), content_type=utils.CONTENT_TYPE)
-
+@require_POST
 @csrf_exempt
 @swagger_auto_schema(methods=[params.post_], request_body=params.new_jwt_req_body, operation_description=params.new_jwt_req_desc)
 @api_view([params.post_])

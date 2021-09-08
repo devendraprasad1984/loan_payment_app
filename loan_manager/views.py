@@ -2,6 +2,7 @@ import json
 
 from django.shortcuts import HttpResponse as res
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view
 
@@ -16,15 +17,18 @@ msg_entity_doesnt_exist = {
 }
 
 
+@require_POST
 @csrf_exempt
-@swagger_auto_schema(methods=[params.post_], request_body=params.add_loan_req_body, manual_parameters=[params.param_signer_ref], operation_description=params.add_loan_desc)
+@swagger_auto_schema(methods=[params.post_], request_body=params.add_loan_req_body, manual_parameters=[params.param_signer_ref],
+                     operation_description=params.add_loan_desc)
 @api_view([params.post_])
 @utils.manager_check_signer_middleware()
 def fn_loan(req):
     if req.method == utils.GET:
         return res(utils.NO_OP_ALLOWED)
     body = utils.getBodyFromReq(req)
-    check_flag, msg = lookup.check_field_existence_in_request_body(body, [field_names.bank_name, field_names.email, field_names.loan_amount, field_names.rate, field_names.year])
+    check_flag, msg = lookup.check_field_existence_in_request_body(body, [field_names.bank_name, field_names.email, field_names.loan_amount,
+                                                                          field_names.rate, field_names.year])
     if check_flag == False: return res(msg, content_type=utils.CONTENT_TYPE)
 
     bank_name = body[field_names.bank_name]
@@ -100,8 +104,10 @@ def fn_loan(req):
     return res(json.dumps(output), content_type=utils.CONTENT_TYPE)
 
 
+@require_POST
 @csrf_exempt
-@swagger_auto_schema(methods=[params.post_], request_body=params.set_loan_payment_req_body, manual_parameters=[params.param_signer_ref], operation_description=params.set_loan_payment_desc)
+@swagger_auto_schema(methods=[params.post_], request_body=params.set_loan_payment_req_body, manual_parameters=[params.param_signer_ref],
+                     operation_description=params.set_loan_payment_desc)
 @api_view([params.post_])
 @utils.borrower_check_signer_middleware()
 def fn_payment(req):
@@ -178,8 +184,10 @@ def fn_payment(req):
     return res(json.dumps(msg), content_type=utils.CONTENT_TYPE)
 
 
+@require_POST
 @csrf_exempt
-@swagger_auto_schema(methods=[params.post_], request_body=params.get_loan_balance_req_body, manual_parameters=[params.param_signer_ref], operation_description=params.get_loan_balance_desc)
+@swagger_auto_schema(methods=[params.post_], request_body=params.get_loan_balance_req_body, manual_parameters=[params.param_signer_ref],
+                     operation_description=params.get_loan_balance_desc)
 @api_view([params.post_])
 @utils.borrower_check_signer_middleware()
 def fn_balance(req):
@@ -187,7 +195,8 @@ def fn_balance(req):
         return res(utils.NO_OP_ALLOWED)
 
     body = utils.getBodyFromReq(req)
-    check_flag, msg = lookup.check_field_existence_in_request_body(body, [field_names.bank_name, field_names.email, field_names.loan_ref, field_names.emi_number])
+    check_flag, msg = lookup.check_field_existence_in_request_body(body, [field_names.bank_name, field_names.email, field_names.loan_ref,
+                                                                          field_names.emi_number])
     if check_flag == False: return res(msg, content_type=utils.CONTENT_TYPE)
 
     bank_name = body[field_names.bank_name]
