@@ -5,21 +5,21 @@ from solution_using_class_based.utils import enums, utils
 class Loan(enums.Enums, ISerialize):
     """store loan ledger entity details"""
 
-    _loan_id = None
+    _loan_id = -1
     _uid = None
     _customer_id = None
     _bank_id = None
-    _emi_months = None
+    _emi_months = 0
     _emi_months_repaid = 0
-    _loan_amount = None
-    _emi_amount = None
-    _rate = None
-    _period = None
+    _loan_amount = 0
+    _emi_amount = 0
+    _rate = 0
+    _period = 0
     _interest = 0
     _repaid_amount = 0
-    _total_amount_pi = None
+    _total_amount_pi = 0
     _active = True
-    _no_of_years = None
+    _no_of_years = 0
     _total_interest = None
 
 
@@ -47,6 +47,14 @@ class Loan(enums.Enums, ISerialize):
         self._total_interest = round(self._loan_amount * self._period * self._rate / 100)
         self._total_amount_pi = self._loan_amount + self._total_interest
         self._emi_amount = round(self._total_amount_pi / self._emi_months)
+        return self
+
+
+    def update(self, lump_sum_payment=0, emi_months=0):
+        """update loan object with lumpsum payment from emi_months"""
+        self._emi_months_repaid += int(emi_months)
+        self._emi_months -= int(emi_months)
+        self._total_amount_pi -= float(lump_sum_payment)
         return self
 
 
