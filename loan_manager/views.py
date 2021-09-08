@@ -46,13 +46,13 @@ def fn_loan(req):
     if bank_entity_exist_check == False or customer_entity_exist_check == False:
         return res(json.dumps(msg_entity_doesnt_exist), content_type=utils.CONTENT_TYPE)
 
-    bankFoundObject = bank[field_names.object]
+    found_bank_object = bank[field_names.object]
     customername = customer[field_names.name]
     loan_limit = customer[field_names.loan_limit]
-    customerFoundObject = customer[field_names.object]
-    customerLoanCalc = customer[field_names.loan_calc]
-    total_number_of_loans = customerLoanCalc[field_names.count]
-    total_loaned_value = customerLoanCalc[field_names.total_loan_amount]
+    found_customer_object = customer[field_names.object]
+    customer_loan_calci = customer[field_names.loan_calc]
+    total_number_of_loans = customer_loan_calci[field_names.count]
+    total_loaned_value = customer_loan_calci[field_names.total_loan_amount]
     credit_loan_left = float(loan_limit) - total_loaned_value
     cannot_sanction_loan = credit_loan_left < loan_amount
     if cannot_sanction_loan == True:
@@ -70,8 +70,8 @@ def fn_loan(req):
         uid = utils.get_uniq_loanid()
         model = models.LOANS(
             uid=uid,
-            bankid=bankFoundObject,
-            customerid=customerFoundObject,
+            bankid=found_bank_object,
+            customerid=found_customer_object,
             loan_amount=loan_amount,
             rate=rate,
             period=period,
@@ -124,7 +124,6 @@ def fn_payment(req):
 
     loan_details_customer = lookup.get_existing_loan_details(loan_ref=loan_ref)
     loan_id = loan_details_customer[field_names.id]
-    loan_uid = loan_details_customer[field_names.uid]
     loan_object = loan_details_customer[field_names.object]
 
     bankid = loan_object[field_names.bankid_id]

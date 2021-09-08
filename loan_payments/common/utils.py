@@ -118,7 +118,7 @@ def get_uniq_loanid():
 
 def add_log(type, logObj):
     try:
-        dblog = models.QUERY_LOG(
+        dblog = models.QueryLog(
             type=type,
             log=json.dumps(logObj)
         )

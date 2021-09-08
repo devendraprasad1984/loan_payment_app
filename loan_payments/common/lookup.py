@@ -115,6 +115,7 @@ def get_existing_loan_details(bankid=None, customerid=None, loan_ref=None):
     id = -1
     uid = ''
     flag = True
+    found_list = None
     try:
         if loan_ref != None and bankid == None and customerid == None:
             found = loan_model.LOANS.objects.filter(uid=loan_ref)

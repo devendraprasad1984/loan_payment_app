@@ -21,7 +21,8 @@ class LOANS(models.Model):
     when = models.DateTimeField(auto_now_add=True, blank=True)
     active = models.BooleanField(default=True)
 
-class QUERY_LOG(models.Model):
+
+class QueryLog(models.Model):
     id = models.AutoField(auto_created=True, primary_key=True)
     type = models.CharField(max_length=150)
     log = models.TextField()
