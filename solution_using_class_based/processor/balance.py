@@ -1,4 +1,4 @@
-from solution_using_class_based.handlers.process_handler import ProcessHandler
+from solution_using_class_based.processor.process_handler import ProcessHandler
 from solution_using_class_based.utils import enums
 
 

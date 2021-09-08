@@ -24,7 +24,7 @@ def main():
 
     command = commands.Commands(input_ledger_commands)
     final_object = command.process_ledger_commands()
-    print_all(final_object=final_object)
+    # print_all(final_object=final_object)
 
 
 if __name__ == "__main__":
