@@ -7,7 +7,7 @@ class CommandHandlerFactory(Enums):
     command_type = None
 
 
-    def __init__(self, type):
+    def __init__(self, type=None):
         self.command_type = type
 
 

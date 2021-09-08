@@ -9,7 +9,6 @@ class Commands(enums.Enums, checkers.Checker):
     _BANKS = []
     _CUSTOMERS = []
     _LOANS = []
-    prepared_objects = {}
 
 
     def __init__(self, commands=None):
@@ -45,17 +44,16 @@ class Commands(enums.Enums, checkers.Checker):
             customer_id = self._add_customer_if_missing(name=customer_name)
             loan_id = f'{bank_id}_{customer_id}'
             # process and handle command LOAN, PAYMENT, BALANCE
-            command_handler = CommandHandlerFactory(command_keys[0]).get()
-            params={
+            command_handler = CommandHandlerFactory(type=command_keys[0]).get()
+            params = {
                 self.key_command: command_keys,
-                self.key_loan : loan_id,
-                self.key_loan_object : self._LOANS
+                self.key_loan: loan_id,
+                self.key_loan_object: self._LOANS
             }
             command_handler.handle(**params)
 
-        self.prepared_objects = {
+        return {
             'banks': self._BANKS,
             'customers': self._CUSTOMERS,
             'ledgers': self._LOANS,
         }
-        return self.prepared_objects
