@@ -5,7 +5,7 @@ from bank_manager import models as bank
 from customer_manager import models as customer
 from loan_manager import models as loan_model
 from subscribe import models as subscriber
-from . import utils, field_names, queries
+from . import field_names, queries, utils
 
 
 def check_field_existence_in_request_body(body, fld_names):
@@ -23,7 +23,7 @@ def check_field_existence_in_request_body(body, fld_names):
 
 
 def check_bank_exists(name=None, uid=None, id=None):
-    id = -1
+    foundid = -1
     flag = True
     try:
         if name != None:
@@ -33,16 +33,15 @@ def check_bank_exists(name=None, uid=None, id=None):
         elif id != None:
             found = bank.BANKS.objects.get(id=id)
 
-        id = found.id
+        foundid = found.id
     except bank.BANKS.DoesNotExist:
         found = None
         if found != None and found.id != None:
             flag = False
-    return {field_names.id: id, field_names.name: name, field_names.status: flag, field_names.object: found}
+    return {field_names.id: foundid, field_names.name: name, field_names.status: flag, field_names.object: found}
 
 
 def check_customer_all_loan(customer_id):
-    id = -1
     flag = True
     try:
         found = loan_model.LOANS.objects.filter(customerid=customer_id)
@@ -65,7 +64,7 @@ def check_customer_all_loan(customer_id):
 
 
 def check_customer_exists(email=None, uid=None, id=None):
-    id = -1
+    foundid = -1
     name = ''
     loan_limit = 0
     found_loan = None
@@ -78,18 +77,19 @@ def check_customer_exists(email=None, uid=None, id=None):
             found = customer.CUSTOMERS.objects.get(uid=uid)
         elif id != None:
             found = customer.CUSTOMERS.objects.get(id=id)
-        id = found.id
+        foundid = found.id
         name = found.name
         loan_limit = found.loan_limit
         found_loan = check_customer_all_loan(id)
     except customer.CUSTOMERS.DoesNotExist:
         if found != None and found.id != None:
             flag = False
-    return {field_names.id: id, field_names.name: name, field_names.loan_limit: loan_limit, field_names.loan_calc: found_loan, field_names.status: flag, field_names.object: found}
+    return {field_names.id: foundid, field_names.name: name, field_names.loan_limit: loan_limit, field_names.loan_calc: found_loan,
+            field_names.status: flag, field_names.object: found}
 
 
 def check_subscriber(email=None, secret_key=None):
-    id = -1
+    foundid = -1
     name = ''
     flag = True
     try:
@@ -97,13 +97,13 @@ def check_subscriber(email=None, secret_key=None):
             found = subscriber.SUBSCRIPTION.objects.get(email=email)
         elif secret_key != None:
             found = subscriber.SUBSCRIPTION.objects.get(secret_key=secret_key)
-        id = found.id
+        foundid = found.id
         name = found.name
     except subscriber.SUBSCRIPTION.DoesNotExist:
         found = None
         if found != None and found.id != None:
             flag = False
-    return {field_names.id: id, field_names.name: name, field_names.status: flag, field_names.object: found}
+    return {field_names.id: foundid, field_names.name: name, field_names.status: flag, field_names.object: found}
 
 
 def check_customer_or_bank_or_loan(id):
