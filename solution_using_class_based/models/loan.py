@@ -14,7 +14,7 @@ class Loan(enums.Enums, ISerialize):
     _emi_amount = None
     _rate = None
     _period = None
-    _interest = None
+    _interest = 0
     _repaid_amount = 0
     _total_amount_pi = None
     _active = None
@@ -27,7 +27,6 @@ class Loan(enums.Enums, ISerialize):
                  loan_amount=None,
                  rate=None,
                  period=None,
-                 interest=None,
                  ):
         """initialize the fields"""
         self._loan_id = id  # eg 1_1, <bankid>_<customerid>
@@ -38,7 +37,6 @@ class Loan(enums.Enums, ISerialize):
         self._loan_amount = loan_amount
         self._rate = rate
         self._period = period
-        self._interest = interest
 
 
     def calculate(self):

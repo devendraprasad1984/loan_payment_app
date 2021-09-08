@@ -1,4 +1,5 @@
 # from abc import ABC, abstractmethod
+from solution_using_class_based.models.loan import Loan
 from solution_using_class_based.utils.enums import Enums
 
 
@@ -18,3 +19,28 @@ class ProcessHandler(Enums):
         self._this_loan_id = kwargs[self.key_loan]
 
         print(f'from child {self._this_command_type} - {self._this_loan_id} - {self._this_command} - {self._this_loan_object}')
+
+
+    def _process_loan(self):
+        """processing loan query"""
+        _loan_amount = self._this_command[3]
+        _no_of_years = self._this_command[4]
+        _rate = self._this_command[5]
+        _this = Loan(
+            id=self._this_loan_id,
+            loan_amount=_loan_amount,
+            rate=_rate,
+            period=_no_of_years,
+        )
+        self._this_loan_object.append(_this)
+        pass
+
+
+    def _process_balance(self):
+        """processing balance query"""
+        pass
+
+
+    def _process_payment(self):
+        """processing payment query"""
+        pass
