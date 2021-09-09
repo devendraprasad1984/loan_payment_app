@@ -44,7 +44,7 @@ class ProcessHandler(Enums):
             loan_amount=_loan_amount,
             rate=_rate,
             period=_no_of_years,
-        ).calculate()
+        )
 
         self._this_loan_object_list.append(_this_loan)
         return _this_loan
